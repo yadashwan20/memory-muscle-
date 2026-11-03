@@ -1,0 +1,1603 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Nine memory-training games based on the techniques in Moonwalking with Einstein: memory palace, names and faces, the Major System, speed cards and more.">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Memory Palace Gym</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout concept: the home page is the floor plan of a memory palace — each room is one drill, numbered in the order you should walk it. Inside a room, a narrow work column with a stone-tablet panel. */
+:root{
+  --paper:#ECEEF2; --paper-2:#E0E4EC; --card:#F9FAFC; --ink:#172033; --ink-2:#4B5569; --line:#C3CAD7; --wall:#26304A;
+  --lapis:#2944C7; --lapis-ink:#ffffff; --lapis-soft:#DDE3FA; --ochre:#A86E0C; --ochre-soft:#F5E7CC;
+  --good:#1D7A4C; --good-soft:#D9F0E3; --bad:#B4232F; --bad-soft:#F8DEE0;
+  --suit-red:#C0262D; --suit-black:#172033;
+  --f-display:"Cinzel","Trajan Pro",Georgia,serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --r:6px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E1320; --paper-2:#151C2D; --card:#1A2234; --ink:#E6EAF2; --ink-2:#9CA7BC; --line:#2E3953; --wall:#8B9AC0;
+  --lapis:#8098FF; --lapis-ink:#0E1320; --lapis-soft:#1F2B55; --ochre:#E5AA45; --ochre-soft:#3A2D14;
+  --good:#52C890; --good-soft:#15362A; --bad:#FF7A82; --bad-soft:#3E1C22;
+  --suit-red:#FF7171; --suit-black:#E6EAF2; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0E1320; --paper-2:#151C2D; --card:#1A2234; --ink:#E6EAF2; --ink-2:#9CA7BC; --line:#2E3953; --wall:#8B9AC0;
+  --lapis:#8098FF; --lapis-ink:#0E1320; --lapis-soft:#1F2B55; --ochre:#E5AA45; --ochre-soft:#3A2D14;
+  --good:#52C890; --good-soft:#15362A; --bad:#FF7A82; --bad-soft:#3E1C22;
+  --suit-red:#FF7171; --suit-black:#E6EAF2; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:var(--lapis)}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:.02em;text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--lapis);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.05rem;letter-spacing:.08em;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px;margin-right:auto}
+.brand svg{flex:none}
+.nav{display:flex;gap:4px;flex-wrap:wrap}
+.nav a{font-size:.85rem;font-weight:500;text-decoration:none;color:var(--ink-2);padding:6px 10px;border-radius:var(--r)}
+.nav a[aria-current="page"]{background:var(--ink);color:var(--paper)}
+.nav a:hover{color:var(--ink)}
+.sync{font-size:.72rem;color:var(--ink-2);letter-spacing:.04em;text-transform:uppercase}
+
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.narrow{max-width:760px;margin:0 auto}
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ochre)}
+.lede{font-size:1.08rem;color:var(--ink-2);max-width:62ch}
+.muted{color:var(--ink-2)}
+.small{font-size:.85rem}
+.stack{display:flex;flex-direction:column;gap:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.spacer{flex:1}
+
+/* hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:32px;align-items:end;margin-bottom:28px}
+.hero h1{font-size:clamp(2rem,5vw,3.3rem)}
+.hero .quote{border-left:3px solid var(--ochre);padding:4px 0 4px 16px;font-style:italic;color:var(--ink-2)}
+.hero .quote b{display:block;font-style:normal;font-size:.8rem;font-weight:500;margin-top:6px}
+@media (max-width:760px){.hero{grid-template-columns:1fr}}
+
+/* floor plan */
+.plan{border:4px solid var(--wall);background:var(--card);display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:minmax(150px,auto);position:relative;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:24px 24px;background-position:-1px -1px}
+.room{position:relative;border:2px solid var(--wall);margin:-1px;padding:14px 14px 12px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--card) 88%,transparent);transition:background .15s}
+.room:hover{background:var(--lapis-soft)}
+.room::after{content:"";position:absolute;background:var(--card);}
+.room.door-b::after{left:24px;bottom:-3px;width:34px;height:4px}
+.room.door-r::after{right:-3px;top:26px;width:4px;height:34px}
+.room:hover::after{background:var(--lapis-soft)}
+.room .num{font-family:var(--f-mono);font-size:.72rem;color:var(--ochre);font-weight:600;letter-spacing:.06em}
+.room h3{font-size:1.06rem}
+.room .tech{font-size:.82rem;color:var(--ink-2);line-height:1.4}
+.room .best{margin-top:auto;font-size:.75rem;font-family:var(--f-mono);color:var(--ink-2)}
+.room .best b{color:var(--lapis)}
+.room.big h3{font-size:1.3rem}
+.r-palace{grid-column:span 3;grid-row:span 2}
+.r-pictures{grid-column:span 3}.r-digits{grid-column:span 3}
+.r-faces{grid-column:span 3}.r-major{grid-column:span 3}.r-cards{grid-column:span 2}
+.r-tea{grid-column:span 2}.r-poem{grid-column:span 2}.r-forge{grid-column:span 6;min-height:110px}
+.compass{position:absolute;right:10px;bottom:-34px;font-family:var(--f-mono);font-size:.7rem;color:var(--ink-2)}
+@media (max-width:820px){.plan{grid-template-columns:repeat(2,minmax(0,1fr))}.r-palace{grid-column:span 2;grid-row:auto}.r-pictures,.r-digits,.r-faces,.r-major,.r-cards,.r-tea,.r-poem,.r-forge{grid-column:span 1}}
+@media (max-width:480px){.plan{grid-template-columns:1fr}.r-palace{grid-column:span 1}.room{min-height:120px}}
+
+.strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:52px}
+.strip > div{border-top:2px solid var(--ink);padding-top:12px}
+.strip h3{font-size:.95rem;margin-bottom:6px}
+.strip p{font-size:.9rem;color:var(--ink-2)}
+@media (max-width:760px){.strip{grid-template-columns:1fr}}
+
+/* game chrome */
+.ghead{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;margin-bottom:18px}
+.ghead h1{font-size:clamp(1.6rem,4vw,2.3rem)}
+.ghead .back{font-size:.85rem;text-decoration:none;color:var(--ink-2)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.panel.tablet{border-top:4px solid var(--ink)}
+.tip{background:var(--ochre-soft);border-radius:var(--r);padding:12px 14px;font-size:.92rem}
+.tip b{font-weight:600}
+.tip .lbl{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ochre);display:block;margin-bottom:2px}
+.btn{appearance:none;border:1px solid var(--ink);background:transparent;color:var(--ink);padding:9px 16px;border-radius:var(--r);font-weight:500;cursor:pointer;line-height:1.2;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--paper-2)}
+.btn.primary{background:var(--lapis);border-color:var(--lapis);color:var(--lapis-ink)}
+.btn.primary:hover{filter:brightness(1.08);background:var(--lapis)}
+.btn.ghost{border-color:transparent;color:var(--ink-2)}
+.btn.small{padding:6px 10px;font-size:.85rem}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:7px 12px;font-size:.88rem;cursor:pointer;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+label.f{display:flex;flex-direction:column;gap:4px;font-size:.82rem;font-weight:500;color:var(--ink-2)}
+input[type=text],input[type=number],textarea,select{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:9px 11px;width:100%;min-width:0}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--lapis);outline:none;box-shadow:0 0 0 3px var(--lapis-soft)}
+textarea{resize:vertical;line-height:1.5}
+.optrow{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end}
+.optrow > *{min-width:0}
+
+.clock{font-family:var(--f-mono);font-size:1.05rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.progress{height:4px;background:var(--paper-2);border-radius:2px;overflow:hidden}
+.progress > i{display:block;height:100%;background:var(--lapis);width:0;transition:width .2s}
+
+.score{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.score .big{font-family:var(--f-display);font-size:3rem;font-weight:700;line-height:1}
+.score .of{font-family:var(--f-mono);color:var(--ink-2)}
+.pill{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--paper-2);color:var(--ink-2);letter-spacing:.03em}
+.pill.good{background:var(--good-soft);color:var(--good)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.ok{color:var(--good)} .no{color:var(--bad)}
+.input-ok{border-color:var(--good)!important;background:var(--good-soft)!important}
+.input-no{border-color:var(--bad)!important;background:var(--bad-soft)!important}
+
+/* palace walk */
+.stage{min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:24px 10px}
+.locus{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre);font-weight:600}
+.item-big{font-family:var(--f-display);font-size:clamp(1.9rem,6vw,3rem);font-weight:700;overflow-wrap:anywhere}
+.recall-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.recall-cell{display:flex;flex-direction:column;gap:4px}
+.recall-cell span{font-size:.75rem;color:var(--ink-2)}
+.recall-cell .ans{font-size:.78rem;min-height:1em}
+
+/* pictures */
+.pic-stage{font-size:clamp(5rem,22vw,9rem);line-height:1;height:1.3em;display:flex;align-items:center;justify-content:center;user-select:none}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:440px;margin:0 auto}
+.pair button{font-size:clamp(3.5rem,14vw,5.5rem);line-height:1;padding:22px 0;background:var(--paper);border:2px solid var(--line);border-radius:var(--r);cursor:pointer}
+.pair button:hover{border-color:var(--lapis)}
+
+/* digits */
+.digit-show{font-family:var(--f-mono);font-size:clamp(3.5rem,16vw,6rem);font-weight:600;height:1.2em;display:flex;align-items:center;justify-content:center}
+.big-input{font-family:var(--f-mono);font-size:1.6rem!important;letter-spacing:.12em;text-align:center}
+
+/* faces */
+.face-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.face-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:10px;display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.face-card svg{width:100%;height:auto;display:block;border-radius:4px}
+.face-name{text-align:center;font-weight:600;line-height:1.25}
+.face-card input{padding:6px 8px;font-size:.9rem}
+.face-card .ans{font-size:.78rem;text-align:center}
+
+/* major */
+.major-table{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.major-table div{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:10px;text-align:center}
+.major-table b{display:block;font-family:var(--f-mono);font-size:1.6rem}
+.major-table span{font-weight:600;color:var(--lapis)}
+.major-table small{display:block;color:var(--ink-2);font-size:.72rem;line-height:1.3;margin-top:4px}
+@media (max-width:560px){.major-table{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.peg-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px}
+.peg-grid label{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:.85rem;color:var(--ink-2)}
+.peg-grid input{padding:5px 7px;font-family:var(--f-body);font-size:.88rem}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:460px;margin:0 auto;width:100%}
+.choices button{padding:14px;font-size:1.1rem;border:1px solid var(--line);background:var(--paper);border-radius:var(--r);cursor:pointer}
+.choices button:hover{border-color:var(--lapis)}
+.digits-pairs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.digits-pairs span{font-family:var(--f-mono);font-size:1.6rem;font-weight:600;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:4px 8px;display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.digits-pairs span small{font-family:var(--f-body);font-size:.7rem;font-weight:500;color:var(--ink-2)}
+
+/* cards */
+.pcard{width:120px;aspect-ratio:5/7;max-width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 2px 0 var(--line);display:flex;flex-direction:column;justify-content:space-between;padding:8px 10px;font-family:var(--f-mono);font-weight:600;user-select:none}
+.pcard.red{color:var(--suit-red)} .pcard.black{color:var(--suit-black)}
+.pcard .c{font-size:3.2rem;text-align:center;line-height:1}
+.pcard .t{font-size:1.25rem;line-height:1}
+.pcard .bt{font-size:1.25rem;line-height:1;transform:rotate(180deg)}
+.pcard.lg{width:min(180px,40vw)}
+.pcard.lg .c{font-size:4.4rem}
+.card-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.pao-hint{font-size:.9rem;color:var(--ink-2);min-height:1.5em}
+.pick-grid{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:4px}
+.pick-grid button{font-family:var(--f-mono);font-weight:600;font-size:.82rem;padding:8px 0;border:1px solid var(--line);border-radius:4px;background:var(--card);cursor:pointer}
+.pick-grid button.red{color:var(--suit-red)}
+.pick-grid button:disabled{opacity:.2;cursor:default}
+@media (max-width:640px){.pick-grid{grid-template-columns:repeat(7,minmax(0,1fr))}}
+.seq{display:flex;flex-wrap:wrap;gap:4px;min-height:34px;padding:6px;border:1px dashed var(--line);border-radius:var(--r)}
+.seq span{font-family:var(--f-mono);font-weight:600;font-size:.82rem;padding:3px 6px;border-radius:4px;background:var(--paper-2)}
+.seq span.red{color:var(--suit-red)}
+.seq span.good{background:var(--good-soft)} .seq span.bad{background:var(--bad-soft);text-decoration:line-through}
+.pao-table{width:100%;border-collapse:collapse;font-size:.88rem}
+.pao-table th{text-align:left;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);padding:6px 4px;border-bottom:1px solid var(--line)}
+.pao-table td{padding:3px 4px;border-bottom:1px solid var(--line)}
+.pao-table td:first-child{font-family:var(--f-mono);font-weight:600;white-space:nowrap}
+.pao-table input{padding:5px 7px;font-size:.86rem}
+.scroll-x{overflow-x:auto}
+
+/* tea party */
+.guest{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 14px;font-size:.95rem}
+.guest dt{color:var(--ink-2);font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
+.guest dd{margin:0;font-weight:500}
+.rooms-key{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px;font-size:.82rem}
+.rooms-key div{border:1px solid var(--line);border-radius:4px;padding:6px 8px;background:var(--paper)}
+.rooms-key b{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ochre)}
+.strikes{font-family:var(--f-mono);font-size:1.3rem;color:var(--bad);letter-spacing:.2em}
+
+/* poem */
+.poem{font-family:Georgia,"Times New Roman",serif;font-size:1.12rem;line-height:1.75;white-space:pre-wrap}
+.poem-line{display:grid;grid-template-columns:2.2em minmax(0,1fr);gap:8px;align-items:start;padding:6px 0;border-bottom:1px solid var(--line)}
+.poem-line .n{font-family:var(--f-mono);font-size:.75rem;color:var(--ink-2);padding-top:6px}
+.poem-line .txt{font-family:Georgia,serif;font-size:1.06rem}
+.poem-line textarea,.poem-line input{font-size:.92rem}
+.diff ins{text-decoration:none;background:var(--good-soft);color:var(--good)}
+.diff del{background:var(--bad-soft);color:var(--bad)}
+
+/* forge */
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.checks label{display:flex;gap:8px;align-items:flex-start;font-size:.9rem;border:1px solid var(--line);border-radius:var(--r);padding:8px 10px;cursor:pointer;background:var(--paper)}
+.checks input{margin-top:4px}
+
+/* learn */
+.tech-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.tcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:8px}
+.tcard h3{font-size:1.1rem}
+.tcard ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:5px;font-size:.93rem}
+.tcard .try{margin-top:auto;padding-top:6px}
+@media (max-width:760px){.tech-list{grid-template-columns:1fr}}
+
+/* log */
+.log-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.log-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:8px}
+.log-card h3{font-size:1rem}
+.log-card .stats{display:flex;gap:16px;font-size:.8rem;color:var(--ink-2)}
+.log-card .stats b{display:block;font-family:var(--f-mono);font-size:1.15rem;color:var(--ink)}
+.spark{width:100%;height:56px;display:block}
+.today{display:flex;gap:22px;flex-wrap:wrap}
+.today div b{display:block;font-family:var(--f-display);font-size:2rem;line-height:1.1}
+.today div span{font-size:.8rem;color:var(--ink-2)}
+.hist{width:100%;border-collapse:collapse;font-size:.86rem}
+.hist td,.hist th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.hist th{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.hist td.num{font-family:var(--f-mono);text-align:right}
+.confirm{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* explainers */
+.guide{background:var(--paper-2);border-radius:var(--r);padding:14px 18px;margin-bottom:18px}
+.guide summary{cursor:pointer;font-weight:600}
+.guide-in{display:flex;flex-direction:column;gap:14px;margin-top:10px}
+.guide-in > p{max-width:72ch}
+.guide-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px}
+.guide h3,.intro h3.k{font-family:var(--f-body);font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre);margin-bottom:6px}
+.guide ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:5px}
+@media (max-width:700px){.guide-cols{grid-template-columns:1fr}}
+.intro{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--ink);border-radius:var(--r);padding:22px;margin-bottom:34px;display:flex;flex-direction:column;gap:18px}
+.intro h2{font-size:1.5rem}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;counter-reset:st}
+.steps li{display:flex;flex-direction:column;gap:6px;counter-increment:st}
+.steps li::before{content:counter(st);font-family:var(--f-display);font-weight:700;font-size:1.6rem;color:var(--lapis);line-height:1}
+.steps b{font-size:1.02rem}
+.steps p{font-size:.93rem;color:var(--ink-2)}
+@media (max-width:760px){.steps{grid-template-columns:1fr}}
+.try-now{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--ochre-soft);border-radius:var(--r);padding:12px 14px}
+.try-now p{flex:1;min-width:240px;font-size:.93rem}
+.plan-cap{font-size:.88rem;color:var(--ink-2);margin:0 0 10px}
+.gloss{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 28px;margin:0}
+.gloss div{padding:9px 0;border-bottom:1px solid var(--line)}
+.gloss dt{font-weight:600}
+.gloss dd{margin:2px 0 0;color:var(--ink-2);font-size:.92rem}
+@media (max-width:700px){.gloss{grid-template-columns:1fr}}
+.tcard .what{color:var(--ink-2);font-size:.93rem}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="bar"><div class="bar-in">
+  <a class="brand" href="#home"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M2 20V8l9-6 9 6v12z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 20v-6h3v6M13 11h3v3h-3z" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>Memory Palace Gym</a>
+  <nav class="nav" aria-label="Main">
+    <a href="#home" data-nav="home">Palace</a>
+    <a href="#learn" data-nav="learn">Techniques</a>
+    <a href="#log" data-nav="log">Training log</a>
+  </nav>
+  <span class="sync" id="sync">Saved on this device</span>
+</div></header>
+<main class="wrap" id="app"></main>
+<script>
+/* ============ helpers ============ */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+function h(tag, props, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) {
+    if (v == null || v === false) continue;
+    if (k === 'class') e.className = v;
+    else if (k === 'style') e.style.cssText = v;
+    else if (k === 'html') e.innerHTML = v;
+    else if (k === 'value') e.value = v;
+    else if (k.startsWith('on') && typeof v === 'function') e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v === true ? '' : v);
+  }
+  for (const c of kids.flat(Infinity)) {
+    if (c == null || c === false) continue;
+    e.append(c.nodeType ? c : document.createTextNode(String(c)));
+  }
+  return e;
+}
+const rand = n => Math.floor(Math.random() * n);
+const pick = a => a[rand(a.length)];
+function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = rand(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+const sample = (a, n) => shuffle(a).slice(0, n);
+const norm = s => String(s || '').toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+function lev(a, b) {
+  const m = a.length, n = b.length; if (!m) return n; if (!n) return m;
+  let prev = Array.from({ length: n + 1 }, (_, i) => i);
+  for (let i = 1; i <= m; i++) {
+    const cur = [i];
+    for (let j = 1; j <= n; j++) cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    prev = cur;
+  }
+  return prev[n];
+}
+/* forgiving match: case, punctuation, a trailing plural, one typo on longer words */
+function matches(given, answer) {
+  const g = norm(given), a = norm(answer);
+  if (!g) return false;
+  if (g === a) return true;
+  const strip = s => s.replace(/(es|s)$/, '');
+  if (strip(g) === strip(a)) return true;
+  return a.length >= 5 && lev(g, a) <= 1;
+}
+const fmtTime = ms => { const s = Math.max(0, ms) / 1000; const m = Math.floor(s / 60); return m ? `${m}:${(s % 60).toFixed(1).padStart(4, '0')}` : `${s.toFixed(1)}s`; };
+function stopwatch(elm) {
+  const t0 = performance.now(); let id = 0;
+  const tick = () => { elm.textContent = fmtTime(performance.now() - t0); id = requestAnimationFrame(tick); };
+  tick();
+  return { stop() { cancelAnimationFrame(id); return performance.now() - t0; }, elapsed: () => performance.now() - t0 };
+}
+function countdown(elm, secs, onDone) {
+  const end = performance.now() + secs * 1000; let id = 0, done = false;
+  const tick = () => {
+    const left = end - performance.now();
+    elm.textContent = fmtTime(left);
+    if (left <= 0) { if (!done) { done = true; onDone && onDone(); } return; }
+    id = requestAnimationFrame(tick);
+  };
+  tick();
+  return { stop() { done = true; cancelAnimationFrame(id); return secs * 1000 - Math.max(0, end - performance.now()); } };
+}
+function seg(options, value, onChange) {
+  const wrap = h('div', { class: 'seg', role: 'group' });
+  const btns = options.map(([v, label]) => h('button', { type: 'button', 'aria-pressed': String(v === value), onclick: () => { btns.forEach(b => b.setAttribute('aria-pressed', 'false')); btn(v).setAttribute('aria-pressed', 'true'); onChange(v); } }, label));
+  const btn = v => btns[options.findIndex(o => o[0] === v)];
+  wrap.append(...btns); return wrap;
+}
+function tip(label, ...body) { return h('div', { class: 'tip' }, h('span', { class: 'lbl' }, label), ...body); }
+
+/* cleanup registry for timers/listeners of the current view */
+let cleanups = [];
+const onLeave = fn => cleanups.push(fn);
+function runCleanups() { cleanups.forEach(f => { try { f(); } catch (e) {} }); cleanups = []; }
+function later(fn, ms) { const id = setTimeout(fn, ms); onLeave(() => clearTimeout(id)); return id; }
+function onKey(fn) { document.addEventListener('keydown', fn); onLeave(() => document.removeEventListener('keydown', fn)); }
+
+/* ============ storage: private per-viewer doc when signed in, else this browser ============ */
+const LS_KEY = 'mpg-training-v1';
+const Store = {
+  data: { sessions: [], loci: null, pao: null, pegs: null },
+  ref: null, writing: false, again: false, mode: 'local',
+  loadLocal() { try { const s = localStorage.getItem(LS_KEY); if (s) Object.assign(this.data, JSON.parse(s)); } catch (e) {} },
+  saveLocal() { try { localStorage.setItem(LS_KEY, JSON.stringify(this.data)); } catch (e) {} },
+  merge(remote) {
+    const seen = new Set(); const all = [];
+    for (const s of [...(remote.sessions || []), ...this.data.sessions]) { const k = s.id || (s.t + s.g); if (!seen.has(k)) { seen.add(k); all.push(s); } }
+    all.sort((a, b) => a.t - b.t);
+    this.data.sessions = all.slice(-600);
+    for (const k of ['loci', 'pao', 'pegs']) if (remote[k] && !this.data[k]) this.data[k] = remote[k]; else if (remote[k] && this.data[k]) this.data[k] = remote[k];
+  },
+  async connect() {
+    try {
+      if (!window.claude || !window.claude.use) return;
+      const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
+      if (!db || !user) return;
+      const id = await user.id();
+      if (!id) return;
+      this.ref = db.doc('data/users/' + id + '/training');
+      const snap = await Promise.race([this.ref.get(), new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 10000))]);
+      const had = this.data.sessions.length;
+      if (snap.exists) this.merge(snap.data() || {});
+      this.mode = 'cloud'; setSync();
+      if (!snap.exists || had) this.flush();
+      this.saveLocal();
+      if (['home', 'log'].includes(currentView)) route();
+    } catch (e) { this.ref = null; this.mode = 'local'; setSync(); }
+  },
+  save() { this.saveLocal(); if (this.ref) this.flush(); },
+  async flush() {
+    if (this.writing) { this.again = true; return; }
+    this.writing = true;
+    try { await this.ref.set(JSON.parse(JSON.stringify(this.data))); this.mode = 'cloud'; }
+    catch (e) { this.mode = 'local'; }
+    setSync();
+    this.writing = false;
+    if (this.again) { this.again = false; this.flush(); }
+  },
+  record(g, score, max, extra = {}) {
+    const s = { id: Date.now().toString(36) + rand(1e6).toString(36), g, score, max, t: Date.now(), ...extra };
+    this.data.sessions.push(s);
+    if (this.data.sessions.length > 600) this.data.sessions = this.data.sessions.slice(-600);
+    this.save();
+    return s;
+  },
+  best(g) { const ss = this.data.sessions.filter(s => s.g === g); return ss.length ? ss.reduce((a, b) => (GAMES[g].better(b, a) ? b : a)) : null; },
+};
+function setSync() { const e = $('#sync'); if (e) e.textContent = Store.mode === 'cloud' ? 'Saved to your account' : 'Saved on this device'; }
+
+/* ============ catalogue of drills (walking order = suggested progression) ============ */
+const pct = s => s.max ? s.score / s.max : 0;
+const higherPct = (a, b) => pct(a) > pct(b) || (pct(a) === pct(b) && (a.ms || 1e12) < (b.ms || 1e12));
+const GAMES = {
+  pictures: { n: 1, name: 'Picture Recall', tech: 'A two-minute warm-up: find out how many pictures you remember without even trying.', cls: 'r-pictures door-b', better: higherPct, fmt: s => `${s.score}/${s.max}` },
+  digits: { n: 2, name: 'Digit Span', tech: 'How many digits can you hold at once? Learn to beat the usual limit of about seven.', cls: 'r-digits door-b', better: (a, b) => a.score > b.score, fmt: s => `${s.score} digits` },
+  palace: { n: 3, name: 'The Palace Walk', tech: 'The main technique. Remember a list by picturing each item at a spot along a route through a house you know.', cls: 'r-palace big door-r', better: higherPct, fmt: s => `${s.score}/${s.max}` },
+  faces: { n: 4, name: 'Names & Faces', tech: 'Remember names by turning each one into a picture and linking it to something noticeable about the face.', cls: 'r-faces door-b', better: higherPct, fmt: s => `${s.score}/${s.max}` },
+  major: { n: 5, name: 'Major System', tech: 'A code that turns numbers into words, so you can picture them. Great for PINs and phone numbers.', cls: 'r-major door-b', better: higherPct, fmt: s => `${s.score}/${s.max}` },
+  cards: { n: 6, name: 'Speed Cards', tech: 'Memorise a shuffled deck the way competitors do: every three cards become one scene.', cls: 'r-cards door-b', better: (a, b) => (a.score === a.max ? 1 : 0) * 1e9 + a.max * 1e3 - (a.ms || 0) / 1e3 > (b.score === b.max ? 1 : 0) * 1e9 + b.max * 1e3 - (b.ms || 0) / 1e3, fmt: s => s.score === s.max ? `${s.max} cards · ${fmtTime(s.ms)}` : `${s.score}/${s.max}` },
+  tea: { n: 7, name: 'The Tea Party', tech: 'Remember facts about new people: birthdays, phone numbers, pets, hobbies.', cls: 'r-tea', better: higherPct, fmt: s => `${s.score}/${s.max}` },
+  poem: { n: 8, name: 'Poem by Heart', tech: 'Learn a poem word for word, with a picture or a feeling for each line.', cls: 'r-poem', better: higherPct, fmt: s => `${Math.round(pct(s) * 100)}% words` },
+  forge: { n: 9, name: 'Image Forge', tech: 'Practise the skill behind everything else: turning dull or abstract words into vivid pictures.', cls: 'r-forge', better: (a, b) => a.score > b.score, fmt: s => `${s.score} images` },
+};
+
+
+/* ============ plain-language explainers, one per room ============ */
+const GUIDES = {
+  pictures: { what: 'Your brain is remarkably good at remembering pictures and poor at remembering words and numbers. This warm-up shows you how strong your picture memory already is. Every other room uses this strength.', how: ['Pictures flash up one at a time.', 'Just look at each one properly. No tricks needed.', 'Then you see two pictures at a time. Tap the one you saw.'], example: 'Most people get 25 or more out of 30 on their first try, even though each picture was on screen for only a second.' },
+  digits: { what: 'Your short-term memory holds only about seven things at once, which is why phone numbers are split into groups. “Chunking” means grouping small items into bigger, meaningful ones, so each of those seven slots holds more. This test measures your “digit span”: how many digits you can repeat back.', how: ['Digits appear one at a time.', 'Type them back in the same order.', 'Each correct answer adds one digit. Two misses at the same length ends the test, and your best length is your span.'], example: '1 9 6 9 2 0 0 1 is eight digits to juggle. Seen as two years, 1969 and 2001, it is just two chunks.' },
+  palace: { what: 'A memory palace is a place you know well (your home, your school, your walk to work) used as a mental filing system. You choose a fixed route with stops along it. To remember a list, you picture each item, in an exaggerated or ridiculous way, at the next stop. To recall, you walk the route in your mind and see what is waiting at each stop. The technique is about 2,500 years old, and it is still what memory champions use.', how: ['Set up your palace below: 10–25 stops in walking order through a place you know. Or use the example house.', 'Each item appears with its stop. Close your eyes and see the item at that spot, as vividly and strangely as you can.', 'Then walk the route again in your mind and type what you find at each stop.'], example: 'List: milk, batteries, stamps. Front door: milk gushing out of the letterbox and soaking your shoes. Sofa: batteries fizzing between the cushions, smelling of burnt plastic. Kitchen table: a giant stamp licking you.' },
+  faces: { what: 'Names are hard to remember because a name on its own means nothing. Psychologists call this the Baker/baker paradox: tell people a man is a baker and they remember it; tell them his name is Baker and they forget, even though it is the same word. A job comes with pictures (bread, a white hat). A name has none until you give it one.', how: ['Pick one feature of each face that stands out: glasses, a beard, curly hair.', 'Turn the name into a picture: Baker → a baker, Kowalski → a cow on skis. Sound-alikes are fine.', 'Imagine the picture doing something to that feature.', 'Then the faces come back in a new order and you type their names.'], example: 'Ben Fisher, who wears round glasses: a fish flops out of each lens while Big Ben chimes on top of his head.' },
+  major: { what: 'Numbers are abstract, so they are hard to picture. The Major System is a code that gives each digit a consonant sound. You add any vowels you like to make a word, and a word is something you can picture.', how: ['Learn the ten sounds in the table below. The memory aid under each one helps.', 'Practise until a picture comes to mind the moment you see a number.', 'For long numbers, split them into pairs and place each pair’s picture at a stop in your palace, or link them into a silly story.'], example: '86 → f + sh → fish. 40 → r + s → rose. So 8640 becomes a fish carrying a rose in its mouth.' },
+  cards: { what: 'Memory competitors memorise a shuffled deck by giving each of the 52 cards a person, an action and an object (PAO for short). Three cards then become one scene: the first card’s person doing the second card’s action to the third card’s object. A whole deck fits into 18 scenes, placed along a memory palace.', how: ['Look at the starter images in “Edit your PAO deck” at the bottom, or replace them with your own. Start small, with hints on.', 'Each group of three cards appears. Picture the scene at your next palace stop.', 'Then tap the cards in the order you saw them.'], example: 'K♥, K♣, K♦ with the starter deck: the King (person of K♥) whistling (action of K♣) a cigar (object of K♦). A king blowing a cigar like a whistle at your front door.' },
+  tea: { what: 'This room combines everything. Give each guest their own imaginary house, and always keep the same kind of fact in the same room (birthdays always in the bathroom, phone numbers always in the den), so you know where to look. Use the Major System from Room 5 for numbers and pictures for everything else.', how: ['Read each guest’s details and build a scene for each fact in the matching room (see the list of rooms).', 'Then answer questions about the guests, one at a time.', 'In three-strikes mode, three wrong answers end the game.'], example: 'Born 12/22/67: in the bathroom of that guest’s house, a tuna (12) wrestles a nun (22) who is eating a chick (67).' },
+  poem: { what: 'Learning a poem word for word is the hardest kind of memorising, because many words (“the”, “and”, “hope”) are hard to picture. There are two approaches: picture each line at a stop in your palace, or attach a feeling to each line, the way actors learn scripts. Rhythm and rhyme help too.', how: ['Pick a poem. Read each line aloud two or three times.', 'Write a short picture or feeling for each line. Each one goes at a stop in your palace.', 'Practise with only the first letter of each word showing.', 'Type the poem from memory. You score a point for each correct word.'], example: '“Who has seen the wind?” → at your front door, a faceless ghost asks you exactly that while your hair whips about.' },
+  forge: { what: 'Everything on this site depends on one skill: turning dull or abstract things into pictures that are big, strange, moving and full of smells and sounds. Abstract words need a trick: use a sound-alike (barometer → a bar) or a concrete symbol (justice → weighing scales).', how: ['You get a word or phrase.', 'Write the scene you would picture.', 'Tick the qualities your scene has, then compare it with an example.'], example: '“Patience” sounds like “patients”: a doctor’s waiting room full of tortoises, each one knitting very, very slowly.' },
+};
+
+/* ============ router ============ */
+const VIEWS = {};
+let currentView = 'home';
+function route() {
+  runCleanups();
+  let v = (location.hash || '#home').slice(1);
+  if (!VIEWS[v]) v = 'home';
+  currentView = v;
+  $$('[data-nav]').forEach(a => a.toggleAttribute('aria-current', false));
+  const navKey = GAMES[v] ? 'home' : v;
+  const navEl = $(`[data-nav="${navKey}"]`); if (navEl) navEl.setAttribute('aria-current', 'page');
+  const app = $('#app'); app.innerHTML = '';
+  VIEWS[v](app);
+  window.scrollTo(0, 0);
+}
+function gameHeader(key, sub) {
+  const g = GAMES[key]; const b = Store.best(key); const G = GUIDES[key];
+  const head = h('div', { class: 'ghead' },
+    h('div', { class: 'stack', style: 'gap:6px;flex:1;min-width:0' },
+      h('a', { class: 'back', href: '#home' }, '← Back to the palace'),
+      h('span', { class: 'eyebrow' }, `Room ${g.n}`),
+      h('h1', {}, g.name),
+      sub ? h('p', { class: 'lede' }, sub) : null),
+    b ? h('span', { class: 'pill' }, 'Your best: ' + g.fmt(b)) : null);
+  const frag = document.createDocumentFragment(); frag.append(head);
+  if (G) {
+    let open = true; try { open = localStorage.getItem('mpg-guide-' + key) !== 'closed'; } catch (e) {}
+    const det = h('details', { class: 'guide', open },
+      h('summary', {}, 'How it works'),
+      h('div', { class: 'guide-in' }, h('p', {}, G.what),
+        h('div', { class: 'guide-cols' },
+          h('div', {}, h('h3', {}, 'How to play'), h('ol', {}, G.how.map(x => h('li', {}, x)))),
+          h('div', {}, h('h3', {}, 'Example'), h('p', {}, G.example)))));
+    det.addEventListener('toggle', () => { try { localStorage.setItem('mpg-guide-' + key, det.open ? 'open' : 'closed'); } catch (e) {} });
+    frag.append(det);
+  }
+  return frag;
+}
+
+/* ============ home ============ */
+VIEWS.home = app => {
+  const s = Store.data.sessions;
+  const today = s.filter(x => new Date(x.t).toDateString() === new Date().toDateString()).length;
+  app.append(
+    h('section', { class: 'hero' },
+      h('div', { class: 'stack' },
+        h('span', { class: 'eyebrow' }, 'Memory training games'),
+        h('h1', {}, 'Walk the rooms. Fill them with strange pictures.'),
+        h('p', { class: 'lede' }, 'These games teach the techniques from ', h('i', {}, 'Moonwalking with Einstein'), ', Joshua Foer’s book about how an ordinary journalist trained his memory for one year and won the 2006 U.S. Memory Championship. You don’t need to have read it: every game explains its technique before you start.')),
+      h('div', { class: 'stack' },
+        h('p', { class: 'quote' }, '“Even average memories are remarkably powerful if used properly.”', h('b', {}, 'Ed Cooke, memory champion and Foer’s coach')),
+        h('p', { class: 'small muted' }, today ? `${today} session${today > 1 ? 's' : ''} logged today. ` : 'Nothing logged today yet. ', 'A good routine: 30 minutes a day, as Foer did.'))),
+    h('section', { class: 'intro', 'aria-labelledby': 'intro-h' },
+      h('div', { class: 'stack', style: 'gap:6px' }, h('span', { class: 'eyebrow' }, 'New here? Start with this'), h('h2', { id: 'intro-h' }, 'The whole method in one minute'),
+        h('p', { class: 'muted', style: 'max-width:72ch' }, 'When scientists scanned the brains of memory champions, they found ordinary brains. The champions weren’t born with special memories. They use a handful of techniques that anyone can learn, built on three steps:')),
+      h('ol', { class: 'steps' },
+        h('li', {}, h('b', {}, 'Turn it into a picture'), h('p', {}, 'Your brain stores pictures far better than words or numbers. So don’t remember the word “milk”: picture milk gushing out of something. Make it huge, funny, gross or ridiculous. Ordinary things slip away; strange ones stick.')),
+        h('li', {}, h('b', {}, 'Put it somewhere you know'), h('p', {}, 'Choose a place you know by heart, like your home, and a fixed route through it: front door, hallway, sofa, kitchen. Leave one picture at each stop. This is called a memory palace.')),
+        h('li', {}, h('b', {}, 'Walk back through'), h('p', {}, 'To remember, imagine walking the route again. Each picture is waiting where you left it, in order. Walk it again later today and tomorrow, and it lasts.'))),
+      h('div', { class: 'try-now' },
+        h('p', {}, h('b', {}, 'Try it now: '), 'milk, batteries, stamps. Milk gushes out of your letterbox. Batteries fizz and spark between your sofa cushions. A giant stamp licks your kitchen table. Close your eyes, walk in through the front door, and see what’s there.'),
+        h('a', { class: 'btn primary', href: '#palace' }, 'Try the Palace Walk'))),
+    h('p', { class: 'plan-cap' }, 'The rooms are in the suggested order. Each one has a short explanation, then the game.'),
+    h('nav', { class: 'plan', 'aria-label': 'Games' },
+      Object.entries(GAMES).map(([k, g]) => {
+        const b = Store.best(k);
+        return h('a', { class: 'room ' + g.cls, href: '#' + k },
+          h('span', { class: 'num' }, `ROOM ${String(g.n).padStart(2, '0')}`),
+          h('h3', {}, g.name),
+          h('p', { class: 'tech' }, g.tech),
+          h('span', { class: 'best' }, b ? h('span', {}, 'Your best ', h('b', {}, g.fmt(b))) : 'Not yet tried'));
+      })),
+    h('section', { class: 'strip' },
+      h('div', {}, h('h3', {}, 'Why it works'), h('p', {}, 'We evolved to remember where things are and what they look like, not lists of words or numbers. Every game turns the second kind of information into the first.')),
+      h('div', {}, h('h3', {}, 'Track your progress'), h('p', {}, 'Every finished game is saved to your training log. If your scores stop improving, the log tells you and suggests how to push harder.')),
+      h('div', {}, h('h3', {}, 'New words?'), h('p', {}, 'The ', h('a', { href: '#learn' }, 'Techniques page'), ' explains every term (loci, PAO, chunking) and who the people quoted in the tips are.'))));
+};
+
+/* ============ techniques ============ */
+const TECHNIQUES = [
+  { t: 'Turn it into a picture', go: 'forge', what: 'Also called elaborative encoding. The principle behind every other technique.', pts: ['Your memory for pictures and places is superb; for words and numbers, poor. So translate one into the other.', 'Make every picture vivid: exaggerated, moving, with smells and sounds, funny, rude or bizarre.', 'Unique beats familiar. You have seen thousands of wine bottles, so “wine” blurs together. A wine bottle that talks is one of a kind.', 'Abstract words need a stand-in: a sound-alike (barometer → a bar full of snacks) or a symbol (justice → scales).'] },
+  { t: 'The memory palace', go: 'palace', what: 'Also called the method of loci (Latin for “places”). Store pictures, in order, along a route through a place you know.', pts: ['Choose a building you know intimately. Your childhood home is a classic first choice.', 'Fix a route and leave one picture at each stop. To remember, walk it again, forwards or backwards.', 'Make each picture stand out from its spot. A white egg against a white wall disappears.', 'Build several palaces and give each a job. Clear one out before reusing it.'] },
+  { t: 'Review on a schedule', go: 'log', what: 'Memories fade fastest right after you learn them.', pts: ['In the 1880s, psychologist Hermann Ebbinghaus found that more than half of new material is forgotten within an hour.', 'Walk your palace again that evening, the next day, and a week later.', 'Sleep locks memories in. Missing sleep is the enemy of memory.'] },
+  { t: 'Names and faces', go: 'faces', what: 'A name means nothing on its own, so give it a meaning.', pts: ['The Baker/baker paradox: people remember that a man is a baker, but forget that his name is Baker. The job comes with pictures; the name doesn’t.', 'Turn the name into something you can picture (Foer → “four”) and link it to one striking feature of the face.', 'Most names are lost because we aren’t paying attention. Decide to notice.'] },
+  { t: 'Chunking', go: 'digits', what: 'Group small items into bigger, meaningful ones.', pts: ['Short-term memory holds about seven items at once. So make each item bigger.', '120741091101 is hard; as two dates, 12/07/41 and 09/11/01, it is easy.', 'Use what you already know. A runner in a famous experiment read digits as race times and remembered about 80 of them.'] },
+  { t: 'The Major System', go: 'major', what: 'A code that turns digits into sounds, sounds into words, and words into pictures.', pts: ['0 s/z · 1 t/d · 2 n · 3 m · 4 r · 5 l · 6 j/sh/ch · 7 k/g · 8 f/v · 9 p/b', 'Add any vowels: 32 = man, 86 = fish, 40 = rose, 92 = pen.', 'Useful straight away for PINs, card numbers and phone numbers.'] },
+  { t: 'Person–Action–Object (PAO)', go: 'cards', what: 'The system competitors use for playing cards and long numbers.', pts: ['Give every card (or every number from 00 to 99) a person, an action and an object.', 'Three items make one scene: the first one’s person, the second one’s action, the third one’s object. A deck fits in 18 scenes.', 'At speed, one vivid detail of a scene is enough. Make similar images clearly different.'] },
+  { t: 'Remembering text and speeches', go: 'poem', what: 'Decide whether you need the gist or the exact words.', pts: ['For a speech: one picture per point, each at a stop in your palace. (The phrase “in the first place” comes from this.)', 'For exact words: say a line two or three times, then turn it into pictures.', 'Or attach a feeling to each short chunk, as actors do. Acting it out helps too.', 'Rhyme, rhythm, repetition and song make words stick. That is why we learn the alphabet as a song.'] },
+  { t: 'Organising facts', go: 'tea', what: 'For many facts about many things, give each its own palace with the same layout.', pts: ['One house per person or topic.', 'Same room, same kind of fact: kitchen for addresses, den for phone numbers, bathroom for birthdays.', 'When there is too much, decide on purpose what to skip, and get the rest right.'] },
+  { t: 'Breaking through plateaus', go: 'log', what: 'How experts keep improving when most people stall.', pts: ['Once a skill feels “good enough” it goes on autopilot and stops improving. The book calls this the OK plateau.', 'Deliberate practice: focus on technique, set goals, get instant feedback, and practise the parts you fail at.', 'Push 10–20% faster than is comfortable (a metronome works for cards). Keep notes on what goes wrong.', 'Expect to do about 20% worse under pressure than in practice.'] },
+  { t: 'Attention and a richer life', go: null, what: 'Remembering starts with noticing.', pts: ['“Remembering can only happen if you decide to take notice.”', 'Routine makes the years blur together; new experiences make them feel longer. Change your routine and create landmarks.', 'Memory is like a spiderweb: the more it catches, the more it can catch. Learning the basics of a subject makes the rest easier.'] },
+  { t: 'Reading to remember', go: null, what: 'Most of what we read we forget within weeks.', pts: ['Read slowly and repeat what matters, rather than skimming a lot.', 'After finishing a book, write a short summary of what you thought of it.', 'Mind maps (notes branching out from a centre, with drawings and colour) improved recall by about 10% in one study.'] },
+];
+const GLOSSARY = [
+  ['Memory palace', 'A place you know well, used to store pictures in order along a route.'],
+  ['Loci (one locus)', 'Latin for “places”: the stops along your route.'],
+  ['Elaborative encoding', 'Turning information into vivid, meaningful pictures so that it sticks.'],
+  ['Chunking', 'Grouping small items into bigger, meaningful ones (digits into years, letters into words).'],
+  ['Working memory', 'The small, short-lived memory that holds about seven things while you use them.'],
+  ['Digit span', 'How many digits you can hear and repeat straight back. A standard measure of working memory.'],
+  ['Major System', 'A code that turns each digit into a consonant sound, so numbers become words.'],
+  ['Peg', 'The fixed picture you have chosen for a number (86 = fish).'],
+  ['PAO', 'Person–Action–Object: each card or number gets a person, an action and an object.'],
+  ['Baker/baker paradox', 'We remember jobs better than identical surnames, because jobs come with associations.'],
+  ['OK plateau', 'The point where you stop improving because a skill has gone on autopilot.'],
+  ['Deliberate practice', 'Focused practice on your weak points, with immediate feedback on how you did.'],
+  ['Mental athlete', 'What memory competitors call themselves.'],
+  ['Grand Master of Memory', 'A competition title: 1,000 digits in an hour, 10 decks of cards in an hour, and one deck in under two minutes.'],
+];
+const PEOPLE = [
+  ['Joshua Foer', 'The journalist who wrote the book. He covered a memory contest, trained for a year, and won the 2006 U.S. Memory Championship.'],
+  ['Ed Cooke', 'A British Grand Master of Memory who coached Foer.'],
+  ['Anders Ericsson', 'A psychologist who studied how experts get good. He tested Foer’s memory before and after his training.'],
+  ['Ben Pridmore', 'A British world memory champion, famous for card memorisation.'],
+  ['“S.”', 'A Russian journalist with an extraordinary natural memory, studied for 30 years by psychologist Alexander Luria. He used memory palaces instinctively.'],
+  ['“SF”', 'A student in a 1981 experiment who trained his digit span from 7 to about 80 by chunking.'],
+  ['Simonides of Ceos', 'A Greek poet who, legend says, invented the memory palace 2,500 years ago.'],
+  ['Rhetorica ad Herennium', 'A Roman textbook from about 85 BC, the oldest surviving guide to memory techniques.'],
+  ['Hermann Ebbinghaus', 'A German psychologist of the 1880s who first measured how quickly we forget.'],
+  ['Gunther Karsten', 'A German memory champion known for his systems for memorising poems.'],
+];
+VIEWS.learn = app => {
+  app.append(
+    h('div', { class: 'ghead' }, h('div', { class: 'stack', style: 'gap:6px' }, h('span', { class: 'eyebrow' }, 'Reference'), h('h1', {}, 'Techniques'), h('p', { class: 'lede' }, 'Every technique from the book, explained in plain language. Each card links to the room where you can practise it.'))),
+    h('div', { class: 'tech-list' }, TECHNIQUES.map(x => h('article', { class: 'tcard' },
+      h('h3', {}, x.t), h('p', { class: 'what' }, x.what), h('ul', {}, x.pts.map(p => h('li', {}, p))),
+      x.go ? h('div', { class: 'try' }, h('a', { class: 'btn small', href: '#' + x.go }, x.go === 'log' ? 'Open the training log' : 'Practise in ' + GAMES[x.go].name)) : null))),
+    h('h2', { style: 'font-size:1.4rem;margin:40px 0 12px' }, 'Words you’ll see'),
+    h('dl', { class: 'gloss' }, GLOSSARY.map(([k, v]) => h('div', {}, h('dt', {}, k), h('dd', {}, v)))),
+    h('h2', { style: 'font-size:1.4rem;margin:40px 0 12px' }, 'People mentioned in the tips'),
+    h('dl', { class: 'gloss' }, PEOPLE.map(([k, v]) => h('div', {}, h('dt', {}, k), h('dd', {}, v)))));
+};
+
+/* ============ training log ============ */
+function sparkline(vals) {
+  const W = 240, H = 56, P = 6;
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('class', 'spark'); svg.setAttribute('preserveAspectRatio', 'none');
+  if (vals.length < 2) return svg;
+  const lo = 0, hi = Math.max(1, ...vals);
+  const x = i => P + i * (W - 2 * P) / (vals.length - 1), y = v => H - P - (v - lo) / (hi - lo) * (H - 2 * P);
+  const d = vals.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
+  svg.innerHTML = `<path d="M${P},${H - P}H${W - P}" stroke="var(--line)" stroke-width="1" fill="none"/>
+    <path d="${d}L${x(vals.length - 1)},${H - P}L${P},${H - P}Z" fill="var(--lapis-soft)" stroke="none"/>
+    <path d="${d}" fill="none" stroke="var(--lapis)" stroke-width="2" vector-effect="non-scaling-stroke"/>
+    <circle cx="${x(vals.length - 1)}" cy="${y(vals[vals.length - 1])}" r="3.5" fill="var(--lapis)"/>`;
+  return svg;
+}
+function plateauNote(key, ss) {
+  if (ss.length < 6) return null;
+  const vals = ss.slice(-6).map(s => key === 'digits' || key === 'forge' ? s.score : pct(s));
+  const first = vals.slice(0, 3).reduce((a, b) => a + b) / 3, last = vals.slice(3).reduce((a, b) => a + b) / 3;
+  const spread = Math.max(...vals) - Math.min(...vals), scale = Math.max(...vals) || 1;
+  if (last <= first * 1.03 && spread / scale < 0.15) return 'No improvement for six sessions. This is the “OK plateau”: the skill has gone on autopilot. Make it 10–20% harder (more items or less time) and note exactly which items you get wrong.';
+  if (last > first * 1.03) return 'Still climbing. Keep the same difficulty until it feels easy, then raise it.';
+  return null;
+}
+VIEWS.log = app => {
+  const ss = Store.data.sessions;
+  const dayKey = t => new Date(t).toDateString();
+  const todayS = ss.filter(s => dayKey(s.t) === dayKey(Date.now()));
+  const mins = Math.round(todayS.reduce((a, s) => a + (s.dur || 0), 0) / 60000);
+  const days = new Set(ss.map(s => dayKey(s.t)));
+  let streak = 0; for (let d = new Date(); days.has(d.toDateString()); d.setDate(d.getDate() - 1)) streak++;
+  app.append(h('div', { class: 'ghead' }, h('div', { class: 'stack', style: 'gap:6px' }, h('span', { class: 'eyebrow' }, 'Deliberate practice'), h('h1', {}, 'Training log'), h('p', { class: 'lede' }, 'Researchers who study experts found that people improve fastest when they keep records, find what is going wrong, and practise exactly that. Every game you finish is saved here.'))));
+  app.append(h('div', { class: 'panel tablet', style: 'margin-bottom:22px' }, h('div', { class: 'today' },
+    h('div', {}, h('b', {}, todayS.length), h('span', {}, 'sessions today')),
+    h('div', {}, h('b', {}, mins), h('span', {}, 'minutes today (goal 40)')),
+    h('div', {}, h('b', {}, streak), h('span', {}, 'day streak')),
+    h('div', {}, h('b', {}, ss.length), h('span', {}, 'sessions in total')))));
+  if (!ss.length) {
+    app.append(h('div', { class: 'panel' }, h('p', {}, 'No sessions yet. Start with ', h('a', { href: '#pictures' }, 'Picture Recall'), ' (two minutes) and ', h('a', { href: '#digits' }, 'Digit Span'), ' to see where your memory starts.')));
+    return;
+  }
+  app.append(h('div', { class: 'log-grid' }, Object.entries(GAMES).map(([k, g]) => {
+    const gs = ss.filter(s => s.g === k); const b = Store.best(k); const last = gs[gs.length - 1];
+    const note = plateauNote(k, gs);
+    return h('article', { class: 'log-card' },
+      h('div', { class: 'row' }, h('h3', {}, g.name), h('span', { class: 'spacer' }), h('a', { class: 'btn small ghost', href: '#' + k }, 'Train')),
+      h('div', { class: 'stats' }, h('span', {}, h('b', {}, gs.length), 'sessions'), h('span', {}, h('b', {}, b ? g.fmt(b) : '—'), 'best'), h('span', {}, h('b', {}, last ? g.fmt(last) : '—'), 'last')),
+      sparkline(gs.slice(-20).map(s => k === 'digits' || k === 'forge' ? s.score : pct(s) * 100)),
+      note ? h('p', { class: 'small muted' }, note) : null);
+  })));
+  const recent = ss.slice(-25).reverse();
+  app.append(h('h2', { style: 'font-size:1.2rem;margin:30px 0 10px' }, 'Recent sessions'),
+    h('div', { class: 'scroll-x panel', style: 'padding:6px' }, h('table', { class: 'hist' },
+      h('thead', {}, h('tr', {}, h('th', {}, 'When'), h('th', {}, 'Room'), h('th', {}, 'Result'), h('th', {}, 'Setup'))),
+      h('tbody', {}, recent.map(s => h('tr', {},
+        h('td', {}, new Date(s.t).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })),
+        h('td', {}, GAMES[s.g] ? GAMES[s.g].name : s.g), h('td', { class: 'num' }, GAMES[s.g] ? GAMES[s.g].fmt(s) : s.score),
+        h('td', { class: 'muted' }, s.note || '')))))));
+  const clearRow = h('div', { class: 'confirm', style: 'margin-top:22px' });
+  const askClear = () => {
+    clearRow.innerHTML = '';
+    clearRow.append(h('span', { class: 'small' }, 'Delete every logged session? Your palace and PAO table are kept.'),
+      h('button', { class: 'btn small', onclick: () => { Store.data.sessions = []; Store.save(); route(); } }, 'Delete sessions'),
+      h('button', { class: 'btn small ghost', onclick: () => { clearRow.innerHTML = ''; clearRow.append(h('button', { class: 'btn small ghost', onclick: askClear }, 'Clear training history')); } }, 'Keep them'));
+  };
+  clearRow.append(h('button', { class: 'btn small ghost', onclick: askClear }, 'Clear training history'));
+  app.append(clearRow);
+};
+/* ============ data ============ */
+const DEFAULT_LOCI = ['Front gate', 'Front door', 'Doormat', 'Hallway mirror', 'Coat hooks', 'Living-room sofa', 'Television', 'Bookshelf', 'Fireplace', 'Dining table', 'Kitchen sink', 'Fridge', 'Stove', 'Back door', 'Bottom stair', 'Top of the stairs', 'Bathroom mirror', 'Bathtub', 'Bed', 'Wardrobe', 'Desk', 'Bedroom window', 'Attic hatch', 'Garage door', 'Garden shed'];
+const CONCRETE = 'anchor apron avocado axe backpack bagpipe balloon banana bandage barrel basket bathtub battery beehive bell bicycle blender bonfire boomerang bottle bowtie bracelet broom bucket butterfly cactus camel candle cannon canoe carrot castle cauldron chainsaw chandelier cheese chimney cigar clock cobweb coconut compass cookie corkscrew crab crayon crocodile crown cucumber cupcake dagger diamond dinosaur dolphin donkey doughnut dragon drum duck eagle earring eel elephant envelope feather ferret fireworks flamingo flute football fork fountain frog garlic giraffe glove goat goldfish gorilla grapes guitar hammer hammock harp hedgehog helicopter helmet honey horseshoe hourglass igloo iron jellyfish kangaroo kettle key kite ladder lantern lemon lighthouse lipstick lizard lobster lollipop magnet mermaid microscope mirror monkey moustache mushroom necklace needle octopus onion ostrich owl paintbrush pancake parachute parrot peacock pear penguin piano pickle pillow pineapple pirate pizza plunger pretzel pumpkin puppet rabbit raincoat rocket rollerskate saddle sandcastle saxophone scarecrow scissors scorpion seashell shark skateboard skeleton skunk sled snail snorkel snowman sock spider spoon squid stapler starfish suitcase sunflower surfboard swan sword teapot telescope tiger toaster tomato toothbrush tornado tractor trampoline trophy trumpet tuba turtle umbrella unicorn vacuum violin volcano waffle walrus watermelon whale whistle wig windmill wizard yoyo zebra zipper'.split(' ');
+const ABSTRACT = 'justice freedom envy patience honour mercy sarcasm grace pity torment courage loyalty wisdom greed boredom curiosity jealousy nostalgia luck fame guilt revenge charity doubt glory rumour silence trust victory hunger'.split(' ');
+const ERRANDS = ['Pickled onions', 'Cottage cheese', 'Smoked salmon', 'Six bottles of lemonade', 'Three pairs of socks', 'Batteries', 'Birthday card', 'Call the dentist', 'Return library books', 'Light bulbs', 'Fresh basil', 'Pay the water bill', 'Dog food', 'Sunscreen', 'Book train tickets', 'Fix bike puncture', 'Olive oil', 'Bin bags', 'Email the landlord', 'Toothpaste', 'Eggs', 'Duct tape', 'Water the tomatoes', 'Pick up dry cleaning', 'Dark chocolate', 'Charge the camera', 'Rice', 'Plasters', 'Renew passport', 'Coffee beans'];
+const IMAGE_PROMPTS = ['Make it enormous, or swarm the spot with hundreds of them.', 'Make it move: spinning, exploding, dancing, leaking.', 'Give it a smell and a taste. Really smell it.', 'Make it talk, or argue with the furniture.', 'Add something gross: mud, slime, blood, red paint.', 'Put someone you know into the scene.', 'Make it absurd or rude. The ruder, the better it sticks.', 'Feel it: cold, sticky, prickly, warm.', 'Make it break or crash into the locus loudly.', 'Light it up so it can’t blend into the background.'];
+const EMOJI = '🍎 🍌 🍇 🍉 🍓 🥑 🥕 🌽 🍄 🥨 🧀 🍔 🍕 🌮 🍩 🍪 🎂 🍿 🥚 🍯 🐶 🐱 🐭 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🦉 🦆 🦅 🐝 🦋 🐌 🐞 🐢 🐍 🦖 🐙 🦀 🐠 🐬 🐳 🦈 🐘 🦒 🦓 🐪 🦘 🦔 🦩 🦚 🌵 🌲 🌴 🌻 🌹 🍁 🌈 ⚡ 🔥 ❄️ 🌙 ⭐ ☂️ 🌋 🏰 🗽 ⛺ 🎡 🚂 🚀 🚁 ⛵ 🚲 🛴 🚗 🚒 🏍️ ⚓ ⏰ ⌛ 📷 🔭 🔬 💡 🔦 🕯️ 📚 ✏️ ✂️ 📎 🔑 🔨 🪓 🧲 🧪 🧸 🎈 🎁 🎨 🎸 🎺 🎻 🥁 🎲 🧩 ♟️ 🎯 🏆 ⚽ 🏀 🎾 🥊 🛼 🪁 👑 🎩 👓 🧤 🧦 👠 💍 💎 🧳 ☎️ 🪑 🛁 🚽 🧹 🧺 🧽 🪜 🪣 🧯 🗿 🛸 🤖 👻 💀'.split(' ');
+
+const FIRST = ['Amara', 'Ben', 'Carmen', 'Dmitri', 'Elena', 'Felix', 'Grace', 'Hiro', 'Ines', 'Jack', 'Kiran', 'Lucia', 'Mateo', 'Nadia', 'Oscar', 'Priya', 'Quentin', 'Rosa', 'Samir', 'Tara', 'Umar', 'Vera', 'Wes', 'Ximena', 'Yusuf', 'Zoe', 'Aiden', 'Bianca', 'Chidi', 'Daphne', 'Emil', 'Farah', 'Gus', 'Hana', 'Ivan', 'June', 'Kofi', 'Leila', 'Marcus', 'Noor', 'Olga', 'Pablo', 'Rhea', 'Sven', 'Tomas', 'Uma', 'Victor', 'Willa', 'Yara', 'Zane', 'Ruby', 'Hugo', 'Ivy', 'Leo', 'Maya', 'Nico', 'Iris', 'Theo', 'Freya', 'Omar'];
+const LAST = ['Baker', 'Fisher', 'Stone', 'Rivers', 'Knight', 'Bell', 'Fox', 'Woods', 'Carpenter', 'Hill', 'Cook', 'Mason', 'Shepherd', 'Moon', 'Frost', 'Gold', 'Sterling', 'Bishop', 'Hunter', 'Rose', 'Lamb', 'Swan', 'Marsh', 'Banks', 'Steele', 'Nguyen', 'Kowalski', 'Okafor', 'Delacroix', 'Petrov', 'Haddad', 'Lindqvist', 'Moreau', 'Tanaka', 'Mendoza', 'Achebe', 'Romano', 'Brennan', 'Castillo', 'Adeyemi', 'Novak', 'Fitzgerald', 'Albrecht', 'Ishikawa', 'Silva', 'MacLeod', 'Oyelaran', 'Varga', 'Kapoor', 'Johansson'];
+
+/* default Major-system pegs 00–99 (and 0–9) */
+const DEFAULT_PEGS = {
+  '0': 'zoo', '1': 'tea', '2': 'Noah', '3': 'ma', '4': 'ray', '5': 'law', '6': 'shoe', '7': 'cow', '8': 'ivy', '9': 'bee',
+  '00': 'sauce', '01': 'suit', '02': 'sun', '03': 'sumo', '04': 'zero', '05': 'sail', '06': 'sash', '07': 'sock', '08': 'sofa', '09': 'soap',
+  '10': 'toes', '11': 'tattoo', '12': 'tuna', '13': 'dome', '14': 'tire', '15': 'towel', '16': 'dish', '17': 'duck', '18': 'dove', '19': 'tuba',
+  '20': 'nose', '21': 'net', '22': 'nun', '23': 'gnome', '24': 'Nero', '25': 'nail', '26': 'niche', '27': 'neck', '28': 'knife', '29': 'knob',
+  '30': 'mouse', '31': 'mat', '32': 'moon', '33': 'mummy', '34': 'mower', '35': 'mule', '36': 'match', '37': 'mug', '38': 'movie', '39': 'map',
+  '40': 'rose', '41': 'rat', '42': 'rain', '43': 'ram', '44': 'roar', '45': 'roll', '46': 'roach', '47': 'rock', '48': 'roof', '49': 'rope',
+  '50': 'lasso', '51': 'lid', '52': 'lion', '53': 'lime', '54': 'lorry', '55': 'lily', '56': 'leash', '57': 'log', '58': 'lava', '59': 'lip',
+  '60': 'cheese', '61': 'sheet', '62': 'chain', '63': 'jam', '64': 'chair', '65': 'jail', '66': 'judge', '67': 'chick', '68': 'chef', '69': 'ship',
+  '70': 'goose', '71': 'cat', '72': 'coin', '73': 'comb', '74': 'car', '75': 'coal', '76': 'cage', '77': 'cake', '78': 'coffee', '79': 'cap',
+  '80': 'vase', '81': 'foot', '82': 'fan', '83': 'foam', '84': 'fire', '85': 'file', '86': 'fish', '87': 'fig', '88': 'fife', '89': 'fob',
+  '90': 'bus', '91': 'bat', '92': 'pen', '93': 'bomb', '94': 'bear', '95': 'bell', '96': 'beach', '97': 'book', '98': 'beef', '99': 'pipe',
+};
+const MAJOR_CODE = [
+  ['0', 's, z', 'z is the first letter of zero'], ['1', 't, d', 't has one downstroke'], ['2', 'n', 'n has two downstrokes'], ['3', 'm', 'm has three downstrokes'], ['4', 'r', 'r is the last sound of four'],
+  ['5', 'l', 'L is the Roman numeral 50'], ['6', 'j, sh, ch, soft g', 'a j looks like a mirrored 6'], ['7', 'k, hard c, hard g', 'a k is built from two 7s'], ['8', 'f, v', 'a script f has two loops, like 8'], ['9', 'p, b', 'p is a mirrored 9'],
+];
+/* words with their Major encodings, for decoding practice */
+const MAJOR_WORDS = [['man', '32'], ['mom', '33'], ['fish', '86'], ['rose', '40'], ['pen', '92'], ['Manitoba', '3219'], ['hammer', '34'], ['lamp', '539'], ['kite', '71'], ['dinosaur', '1204'], ['tiger', '174'], ['banana', '922'], ['rocket', '471'], ['camel', '735'], ['guitar', '714'], ['violin', '852'], ['lemon', '532'], ['robot', '491'], ['pirate', '941'], ['giraffe', '648'], ['volcano', '8572'], ['magnet', '3721'], ['balloon', '952'], ['teapot', '191'], ['mermaid', '3431'], ['carrot', '741'], ['cactus', '7710'], ['dragon', '1472'], ['pumpkin', '93972'], ['napkin', '2972'], ['mitten', '312'], ['bottle', '915'], ['ladder', '514'], ['tomato', '131'], ['unicorn', '2742'], ['jellyfish', '6586'], ['pancake', '9277'], ['castle', '705'], ['submarine', '09342'], ['firework', '8447']];
+
+/* PAO starter deck: archetypes rather than celebrities — replace with your own people */
+const SUITS = [['S', '♠', 'black'], ['H', '♥', 'red'], ['D', '♦', 'red'], ['C', '♣', 'black']];
+const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+const DEFAULT_PAO = {
+  AS: ['Astronaut', 'floating', 'space helmet'], '2S': ['Knight', 'jousting', 'lance'], '3S': ['Miner', 'digging', 'pickaxe'], '4S': ['Firefighter', 'hosing', 'fire hose'], '5S': ['Boxer', 'punching', 'speed bag'],
+  '6S': ['Lumberjack', 'chopping', 'axe'], '7S': ['Jockey', 'galloping', 'saddle'], '8S': ['Samurai', 'slicing', 'katana'], '9S': ['Pirate', 'firing', 'cannon'], '10S': ['Plumber', 'plunging', 'plunger'],
+  JS: ['Ninja', 'throwing', 'shuriken'], QS: ['Witch', 'stirring', 'cauldron'], KS: ['Viking', 'roaring', 'horned helmet'],
+  AH: ['Cupid', 'shooting', 'arrow'], '2H': ['Bride', 'tossing', 'bouquet'], '3H': ['Baby', 'crawling', 'rattle'], '4H': ['Grandma', 'knitting', 'yarn ball'], '5H': ['Nurse', 'bandaging', 'stethoscope'],
+  '6H': ['Poet', 'scribbling', 'quill'], '7H': ['Dancer', 'twirling', 'ribbon'], '8H': ['Chef', 'flipping', 'pancake'], '9H': ['Gardener', 'watering', 'watering can'], '10H': ['Singer', 'crooning', 'microphone'],
+  JH: ['Romeo', 'climbing', 'balcony'], QH: ['Queen of Hearts', 'painting', 'red rose'], KH: ['King', 'proposing', 'diamond ring'],
+  AD: ['Banker', 'counting', 'gold bar'], '2D': ['Jeweller', 'polishing', 'tiara'], '3D': ['Magician', 'pulling', 'top hat'], '4D': ['Cowboy', 'lassoing', 'lasso'], '5D': ['Pharaoh', 'mummifying', 'sarcophagus'],
+  '6D': ['Gambler', 'rolling', 'dice'], '7D': ['Racing driver', 'spraying', 'champagne'], '8D': ['Butler', 'serving', 'silver tray'], '9D': ['Explorer', 'hacking', 'machete'], '10D': ['Robot', 'beeping', 'circuit board'],
+  JD: ['Thief', 'cracking', 'safe'], QD: ['Opera diva', 'shattering', 'wine glass'], KD: ['Tycoon', 'smoking', 'cigar'],
+  AC: ['Golfer', 'putting', 'golf club'], '2C': ['Surfer', 'riding', 'surfboard'], '3C': ['Skier', 'slaloming', 'ski poles'], '4C': ['Tennis player', 'serving', 'racket'], '5C': ['Hula dancer', 'hula-hooping', 'hula hoop'],
+  '6C': ['Weightlifter', 'lifting', 'barbell'], '7C': ['Cyclist', 'pedalling', 'bicycle'], '8C': ['Goalkeeper', 'diving', 'football'], '9C': ['Archer', 'aiming', 'bow'], '10C': ['Juggler', 'juggling', 'bowling pins'],
+  JC: ['Skateboarder', 'grinding', 'skateboard'], QC: ['Figure skater', 'spinning', 'ice skates'], KC: ['Referee', 'whistling', 'red card'],
+};
+
+/* public-domain poems (all published before 1929) */
+const POEMS = [
+  { id: 'wind', title: 'Who Has Seen the Wind?', by: 'Christina Rossetti, 1872', text: `Who has seen the wind?
+Neither I nor you:
+But when the leaves hang trembling,
+The wind is passing through.
+Who has seen the wind?
+Neither you nor I:
+But when the trees bow down their heads,
+The wind is passing by.` },
+  { id: 'gold', title: 'Nothing Gold Can Stay', by: 'Robert Frost, 1923', text: `Nature's first green is gold,
+Her hardest hue to hold.
+Her early leaf's a flower;
+But only so an hour.
+Then leaf subsides to leaf.
+So Eden sank to grief,
+So dawn goes down to day.
+Nothing gold can stay.` },
+  { id: 'hope', title: '“Hope” is the thing with feathers', by: 'Emily Dickinson, published 1891', text: `“Hope” is the thing with feathers -
+That perches in the soul -
+And sings the tune without the words -
+And never stops - at all -
+And sweetest - in the Gale - is heard -
+And sore must be the storm -
+That could abash the little Bird
+That kept so many warm -
+I've heard it in the chillest land -
+And on the strangest Sea -
+Yet - never - in Extremity,
+It asked a crumb - of me.` },
+  { id: 's18', title: 'Sonnet 18', by: 'William Shakespeare, 1609', text: `Shall I compare thee to a summer's day?
+Thou art more lovely and more temperate:
+Rough winds do shake the darling buds of May,
+And summer's lease hath all too short a date;
+Sometime too hot the eye of heaven shines,
+And often is his gold complexion dimm'd;
+And every fair from fair sometime declined,
+By chance or nature's changing course untrimm'd;
+But thy eternal summer shall not fade,
+Nor lose possession of that fair thou ow'st;
+Nor shall Death brag thou wander'st in his shade,
+When in eternal lines to time thou grow'st:
+So long as men can breathe or eyes can see,
+So long lives this, and this gives life to thee.` },
+];
+
+/* Image Forge prompts, each with one example image */
+const FORGE = [
+  ['Email Sophia', 'A swan typing furiously on a laptop while Sophia (or the city of Sofia, its golden domes) sits on its back reading over its shoulder.'],
+  ['Barometer', 'A giant glass thermometer column standing in a bowl of salty bar snacks, a bartender pouring beer over it.'],
+  ['Justice', 'A blindfolded giantess on your sofa weighing two live, wriggling lobsters in brass scales.'],
+  ['Patience', 'A doctor’s waiting room where the patients are tortoises, each one slowly knitting a scarf a mile long.'],
+  ['Mortgage', 'A grim reaper (mort = death) chewing on the roof of your house like a giant biscuit.'],
+  ['Photosynthesis', 'A sunflower wearing sunglasses, slurping sunlight through a straw and burping green bubbles.'],
+  ['Inflation', 'A banknote being blown up like a balloon until it bursts and showers coins all over the kitchen.'],
+  ['Renew passport', 'Your passport photo climbing out of the booklet, aging rapidly, and demanding a fresh photo shoot with a flash.'],
+  ['Courage', 'A cowardly lion gulping a glowing drink and suddenly roaring so hard the curtains catch fire.'],
+  ['Password', 'A bouncer at your front door who only lets in people who whisper the word, which is a sneeze.'],
+  ['Nostalgia', 'Your childhood toys sitting on the stairs, weeping into old photo albums that smell of crayons.'],
+  ['Name: Rachel Woods', 'A ray of light (Ra) cutting through a dark wood, where a chel-lo is being played by a tree.'],
+  ['Name: Ken Ishikawa', 'A plastic Ken doll fishing (ishi → fishy) in a river (kawa) full of koi that leap into his hair.'],
+  ['Number 86 · 40', 'With the Major System: a fish (86) holding a rose (40) in its mouth, flopping across the dining table.'],
+  ['Gratitude', 'A grater shredding a mountain of thank-you cards into confetti that rains over everyone you love.'],
+  ['Ambition', 'A ladder growing out of your desk through the ceiling, with you sprinting up it in a business suit and roller skates.'],
+  ['Oxygen', 'An ox breathing out enormous blue bubbles, each one with a tiny gentleman (gent) inside.'],
+  ['Call the dentist', 'A giant tooth ringing a rotary phone with its root, screaming down the receiver.'],
+  ['Monday 9am meeting', 'Nine (9) apes in suits around your kitchen table, all groaning, each with a Monday calendar stuck to its forehead.'],
+  ['Freedom', 'A parrot bursting out of its cage through the window, trailing broken chains and singing at the top of its lungs.'],
+];
+const FORGE_CHECKS = [['big', 'Exaggerated in size or number'], ['move', 'Moving or doing something'], ['senses', 'Has a smell, taste, sound or texture'], ['odd', 'Funny, crude, gross or bizarre'], ['personal', 'Involves someone or somewhere you know'], ['link', 'Clearly decodes back to the original (sound or meaning)']];
+
+/* tea party guest material */
+const CITIES = [['Ithaca, New York', '14850'], ['Boise, Idaho', '83702'], ['Savannah, Georgia', '31401'], ['Tucson, Arizona', '85701'], ['Duluth, Minnesota', '55802'], ['Asheville, North Carolina', '28801'], ['Eugene, Oregon', '97401'], ['Burlington, Vermont', '05401'], ['Santa Fe, New Mexico', '87501'], ['Madison, Wisconsin', '53703'], ['Galveston, Texas', '77550'], ['Bangor, Maine', '04401'], ['Fargo, North Dakota', '58102'], ['Key West, Florida', '33040'], ['Anchorage, Alaska', '99501']];
+const PETS = [['dog', 'Karma'], ['cat', 'Biscuit'], ['tortoise', 'Napoleon'], ['parrot', 'Pickles'], ['rabbit', 'Waffles'], ['goldfish', 'Captain'], ['ferret', 'Ziggy'], ['iguana', 'Duchess'], ['hamster', 'Meatball'], ['dog', 'Professor'], ['cat', 'Sushi'], ['horse', 'Thunder']];
+const HOBBIES = ['knitting', 'cycling', 'birdwatching', 'salsa dancing', 'fencing', 'beekeeping', 'rock climbing', 'chess', 'pottery', 'surfing', 'baking sourdough', 'kayaking', 'stamp collecting', 'juggling', 'archery', 'karaoke', 'gardening', 'origami', 'skateboarding', 'astronomy'];
+const CARS = ['black 1927 Model T', 'red 1965 Mustang', 'yellow VW Beetle', 'silver Volvo station wagon', 'green Land Rover Defender', 'white Vespa scooter', 'blue Mini Cooper', 'orange camper van', 'purple pickup truck', 'maroon Jaguar E-Type'];
+const FOODS = ['pizza and jelly beans', 'pickled herring', 'chocolate cake', 'pad thai', 'peppermint ice cream', 'lobster rolls', 'fried green tomatoes', 'mango sticky rice', 'blueberry pancakes', 'spicy ramen', 'cheese fondue', 'tacos al pastor'];
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+/* ============ shared result block ============ */
+function resultBlock(score, max, extras, again, unit) {
+  const r = max ? score / max : 0;
+  const verdict = r >= 0.9 ? ['good', 'Excellent'] : r >= 0.7 ? ['good', 'Strong'] : r >= 0.5 ? ['', 'Getting there'] : ['bad', 'Keep training'];
+  return h('div', { class: 'stack' },
+    h('div', { class: 'score' }, h('span', { class: 'big' }, score), h('span', { class: 'of' }, unit || `of ${max}`), max ? h('span', { class: 'pill ' + verdict[0] }, verdict[1]) : null),
+    ...(extras || []),
+    h('div', { class: 'row' }, h('button', { class: 'btn primary', onclick: again }, 'Go again'), h('a', { class: 'btn', href: '#log' }, 'Training log'), h('a', { class: 'btn ghost', href: '#home' }, 'Back to the palace')));
+}
+function getLoci() { return (Store.data.loci && Store.data.loci.length >= 5) ? Store.data.loci : DEFAULT_LOCI; }
+
+/* ============ 1 · picture recall ============ */
+VIEWS.pictures = app => {
+  app.append(gameHeader('pictures', 'Pictures flash by, about one a second. Then you see pairs and pick the one you saw. In the 1970s, people shown 10,000 pictures once still recognised over 80% of them.'));
+  const body = h('div', { class: 'panel tablet' }); app.append(body);
+  let count = 30, speed = 1000;
+  function setup() {
+    body.innerHTML = '';
+    body.append(h('div', { class: 'stack' },
+      h('div', { class: 'optrow' },
+        h('div', { class: 'f' }, 'Pictures', seg([[20, '20'], [30, '30'], [50, '50']], count, v => count = v)),
+        h('div', { class: 'f' }, 'Time each', seg([[1500, '1.5 s'], [1000, '1 s'], [500, '0.5 s']], speed, v => speed = v))),
+      tip('How to play', 'Don’t use any technique. Just look at each picture properly. Memory coaches use this test to show beginners that their memory for pictures is already excellent.'),
+      h('div', {}, h('button', { class: 'btn primary', onclick: run }, 'Start'))));
+  }
+  function run() {
+    const t0 = Date.now(); const pool = shuffle(EMOJI);
+    const seen = pool.slice(0, count), unseen = pool.slice(count, count * 2);
+    body.innerHTML = '';
+    const stage = h('div', { class: 'pic-stage', 'aria-live': 'polite' }); const bar = h('i');
+    body.append(h('div', { class: 'stack' }, h('div', { class: 'progress' }, bar), stage));
+    let i = 0;
+    const next = () => {
+      if (i >= count) { stage.textContent = ''; later(() => test(seen, unseen, t0), 500); return; }
+      stage.textContent = seen[i]; bar.style.width = ((i + 1) / count * 100) + '%'; i++;
+      later(() => { stage.textContent = ''; later(next, 150); }, speed);
+    };
+    later(next, 400);
+  }
+  function test(seen, unseen, t0) {
+    const order = shuffle(seen.map((s, i) => [s, unseen[i]]));
+    let k = 0, right = 0; const missed = [];
+    body.innerHTML = '';
+    const lbl = h('p', { class: 'muted', style: 'text-align:center' }); const pair = h('div', { class: 'pair' });
+    body.append(h('div', { class: 'stack' }, h('h2', { style: 'font-size:1.25rem;text-align:center' }, 'Which one did you see?'), lbl, pair));
+    const show = () => {
+      if (k >= order.length) return done();
+      const [s, u] = order[k]; lbl.textContent = `${k + 1} of ${order.length}`; pair.innerHTML = '';
+      shuffle([s, u]).forEach(o => pair.append(h('button', { type: 'button', onclick: () => { if (o === s) right++; else missed.push(s); k++; show(); } }, o)));
+    };
+    show();
+    function done() {
+      Store.record('pictures', right, order.length, { dur: Date.now() - t0, note: `${count} pictures · ${speed / 1000} s each` });
+      body.innerHTML = '';
+      body.append(resultBlock(right, order.length, [
+        h('p', {}, right / order.length >= 0.85 ? 'Your visual memory is doing what it was built for, with no technique at all. Every other room borrows this power.' : 'Most people score above 85% after some practice. Try again at a slower pace and really look at each picture.'),
+        missed.length ? h('p', { class: 'small muted' }, 'Missed: ', h('span', { style: 'font-size:1.4rem' }, missed.join(' '))) : null,
+        tip('Why it matters', 'Pictures stick and words don’t. Every technique in the other rooms works by turning words, numbers and names into pictures, so they stick too.')], setup));
+    }
+  }
+  setup();
+};
+
+/* ============ 2 · digit span ============ */
+VIEWS.digits = app => {
+  app.append(gameHeader('digits', 'Most people can hold about seven digits, give or take two. Joshua Foer, the book’s author, started at 9 and reached 18 after a year of training.'));
+  const body = h('div', { class: 'panel tablet' }); app.append(body);
+  let speed = 1000, grouping = 1, startLen = 5;
+  function setup() {
+    body.innerHTML = '';
+    body.append(h('div', { class: 'stack' },
+      h('div', { class: 'optrow' },
+        h('div', { class: 'f' }, 'Pace', seg([[1000, '1 per second'], [700, 'Faster'], [450, 'Fastest']], speed, v => speed = v)),
+        h('div', { class: 'f' }, 'Show digits', seg([[1, 'One at a time'], [3, 'In threes']], grouping, v => grouping = v)),
+        h('div', { class: 'f' }, 'Start at', seg([[4, '4'], [5, '5'], [7, '7'], [10, '10']], startLen, v => startLen = v))),
+      tip('How to beat seven', 'Don’t just repeat the digits in your head. Group them into chunks that mean something: read 1-9-4-5 as a year, or 3-4-9 as 3 minutes 49, a fast mile. Later, the Major System (Room 5) lets you turn each pair of digits into a picture.'),
+      h('div', {}, h('button', { class: 'btn primary', onclick: () => run(startLen) }, 'Start test'))));
+  }
+  function run(len0) {
+    const t0 = Date.now(); let len = len0, fails = 0, best = len0 - 1;
+    const trial = () => {
+      const num = Array.from({ length: len }, () => rand(10)).join('');
+      body.innerHTML = '';
+      const show = h('div', { class: 'digit-show', 'aria-live': 'polite' });
+      body.append(h('div', { class: 'stack' }, h('p', { class: 'muted', style: 'text-align:center' }, `${len} digits`), show));
+      const chunks = num.match(new RegExp(`.{1,${grouping}}`, 'g'));
+      let i = 0;
+      const step = () => {
+        if (i >= chunks.length) { show.textContent = ''; later(() => ask(num), 300); return; }
+        show.textContent = chunks[i++];
+        later(() => { show.textContent = ''; later(step, 120); }, speed * (grouping === 3 ? 2.2 : 1));
+      };
+      later(step, 600);
+    };
+    const ask = num => {
+      body.innerHTML = '';
+      const inp = h('input', { type: 'text', inputmode: 'numeric', autocomplete: 'off', class: 'big-input', id: 'digit-answer', 'aria-label': 'Digits in order' });
+      const go = () => {
+        const ok = inp.value.replace(/\D/g, '') === num;
+        if (ok) { best = Math.max(best, len); len++; fails = 0; } else { fails++; }
+        body.innerHTML = '';
+        const msg = h('div', { class: 'stack', style: 'text-align:center;align-items:center' },
+          h('p', { class: ok ? 'ok' : 'no', style: 'font-size:1.2rem;font-weight:600' }, ok ? 'Correct' : 'Not quite'),
+          h('p', { class: 'mono', style: 'font-size:1.3rem' }, num.replace(/(\d{3})(?=\d)/g, '$1 ')),
+          !ok ? h('p', { class: 'mono muted' }, 'You typed: ' + (inp.value || '—')) : null);
+        body.append(msg);
+        if (fails >= 2) {
+          later(() => {
+            const sc = Math.max(0, best);
+            Store.record('digits', sc, 0, { dur: Date.now() - t0, note: grouping === 3 ? 'shown in threes' : `${speed} ms per digit` });
+            body.innerHTML = '';
+            body.append(resultBlock(sc, 0, [
+              h('p', {}, sc >= 10 ? 'Beyond the magical seven. You are storing chunks, not single digits.' : sc >= 7 ? 'Right in the human average of 7 ± 2. Chunking or Major-system images will push you past it.' : 'A short span is normal under pressure. Try “In threes” and read each group as one number.'),
+              tip('A famous experiment', 'In 1981, a student known as SF practised this test for 250 hours. He was a runner, so he started reading the digits as race times, and his span went from 7 to about 80. His span for letters stayed at 7: memory skills only improve for what you actually train.')], setup, 'digits (your span)'));
+          }, 1400);
+        } else later(trial, 1400);
+      };
+      inp.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+      body.append(h('div', { class: 'stack', style: 'max-width:460px;margin:0 auto' }, h('label', { class: 'f', for: 'digit-answer' }, 'Type the digits in order'), inp, h('button', { class: 'btn primary', onclick: go }, 'Check')));
+      inp.focus();
+    };
+    trial();
+  }
+  setup();
+};
+
+/* ============ 3 · palace walk ============ */
+VIEWS.palace = app => {
+  app.append(gameHeader('palace', 'Name the stops along a route through a house you know. Then each item is shown with its stop: picture the item there, as vividly and strangely as you can. Then walk the route back.'));
+  const body = h('div', { class: 'stack' }); app.append(body);
+  let kind = 'errands', count = 15, pace = 0, dir = 'fwd', ideas = true;
+  function setup() {
+    body.innerHTML = '';
+    const loci = getLoci();
+    const ta = h('textarea', { id: 'loci-editor', rows: 10, 'aria-label': 'Stops in your palace, one per line' }, loci.join('\n'));
+    const saved = h('span', { class: 'small muted' });
+    const save = () => {
+      const l = ta.value.split('\n').map(s => s.trim()).filter(Boolean);
+      if (l.length < 5) { saved.textContent = 'Add at least five stops.'; return; }
+      Store.data.loci = l; Store.save(); saved.textContent = `Saved ${l.length} stops.`;
+    };
+    body.append(
+      h('div', { class: 'panel tablet stack' },
+        h('h2', { style: 'font-size:1.15rem' }, 'Start a walk'),
+        h('div', { class: 'optrow' },
+          h('div', { class: 'f' }, 'What to memorise', seg([['errands', 'To-do & shopping list'], ['words', 'Random words'], ['hard', 'Words + abstract']], kind, v => kind = v)),
+          h('div', { class: 'f' }, 'Items', seg([[10, '10'], [15, '15'], [20, '20'], [25, '25']], count, v => count = v))),
+        h('div', { class: 'optrow' },
+          h('div', { class: 'f' }, 'Pace', seg([[0, 'Self-paced'], [10, '10 s each'], [5, '5 s each']], pace, v => pace = v)),
+          h('div', { class: 'f' }, 'Recall order', seg([['fwd', 'Forwards'], ['back', 'Backwards']], dir, v => dir = v)),
+          h('div', { class: 'f' }, 'Image ideas', seg([[true, 'Show'], [false, 'Hide']], ideas, v => ideas = v))),
+        h('div', {}, h('button', { class: 'btn primary', onclick: run }, 'Begin the walk'))),
+      h('div', { class: 'panel stack' },
+        h('h2', { style: 'font-size:1.15rem' }, 'Your palace'),
+        h('p', { class: 'small muted' }, 'One stop per line, in walking order. Use a real place you know intimately: your childhood home, school, a daily walk. You need at least as many stops as items.'),
+        ta, h('div', { class: 'row' }, h('button', { class: 'btn small', onclick: save }, 'Save palace'), h('button', { class: 'btn small ghost', onclick: () => { ta.value = DEFAULT_LOCI.join('\n'); } }, 'Use example house'), saved)),
+      tip('How the author learned it', 'His coach had him picture a giant jar of pickled garlic at the end of the driveway, a celebrity swimming in a paddling pool of cottage cheese at the front door, and a salmon smoking on the piano strings. Smell it, taste it, exaggerate it, and see it exactly at its stop.'));
+  }
+  function run() {
+    const loci = getLoci();
+    const n = Math.min(count, loci.length);
+    let items;
+    if (kind === 'errands') items = sample(ERRANDS, n);
+    else if (kind === 'words') items = sample(CONCRETE, n);
+    else items = shuffle([...sample(CONCRETE, Math.ceil(n * 0.7)), ...sample(ABSTRACT, Math.floor(n * 0.3))]);
+    const t0 = Date.now(); let i = 0;
+    body.innerHTML = '';
+    const panel = h('div', { class: 'panel tablet' }); body.append(panel);
+    const clock = h('span', { class: 'clock' }); const sw = stopwatch(clock); onLeave(() => sw.stop());
+    const bar = h('i'); const locus = h('div', { class: 'locus' }); const item = h('div', { class: 'item-big' }); const idea = h('p', { class: 'muted small' });
+    const cd = h('span', { class: 'clock' });
+    const nextBtn = h('button', { class: 'btn primary', onclick: () => advance() }, 'Next stop →');
+    panel.append(h('div', { class: 'stack' }, h('div', { class: 'row' }, h('span', { class: 'small muted' }, 'Memorising'), h('span', { class: 'spacer' }), cd, clock), h('div', { class: 'progress' }, bar),
+      h('div', { class: 'stage' }, locus, item, idea, nextBtn), h('p', { class: 'small muted', style: 'text-align:center' }, 'Enter or → for the next stop')));
+    let timer = null;
+    const show = () => {
+      locus.textContent = `Stop ${i + 1} of ${n} · ${loci[i]}`; item.textContent = items[i];
+      idea.textContent = ideas ? pick(IMAGE_PROMPTS) : '';
+      bar.style.width = ((i + 1) / n * 100) + '%';
+      nextBtn.textContent = i === n - 1 ? 'Finish and recall' : 'Next stop →';
+      if (timer) timer.stop();
+      if (pace) timer = countdown(cd, pace, () => advance());
+    };
+    const advance = () => { if (i < n - 1) { i++; show(); } else { if (timer) timer.stop(); recall(items, loci.slice(0, n), sw.stop(), t0); } };
+    onKey(e => { if ((e.key === 'Enter' || e.key === 'ArrowRight') && !['TEXTAREA','BUTTON','INPUT'].includes(e.target.tagName)) { e.preventDefault(); advance(); } });
+    show();
+  }
+  function recall(items, loci, msStudy, t0) {
+    runCleanups();
+    body.innerHTML = '';
+    const order = loci.map((l, i) => i); if (dir === 'back') order.reverse();
+    const inputs = [];
+    const grid = h('div', { class: 'recall-grid' }, order.map(i => {
+      const inp = h('input', { type: 'text', id: 'recall-' + i, autocomplete: 'off', 'aria-label': `Item at ${loci[i]}` });
+      inputs[i] = inp;
+      return h('div', { class: 'recall-cell' }, h('span', {}, `${i + 1}. ${loci[i]}`), inp, h('span', { class: 'ans', id: 'ans-' + i }));
+    }));
+    const check = h('button', { class: 'btn primary', onclick: () => score() }, 'Check my walk');
+    body.append(h('div', { class: 'panel tablet stack' },
+      h('h2', { style: 'font-size:1.15rem' }, dir === 'back' ? 'Walk the route backwards' : 'Walk the route again'),
+      h('p', { class: 'small muted' }, `Studied in ${fmtTime(msStudy)}. Close your eyes, stand at each stop and see what is there.`),
+      grid, h('div', { class: 'row' }, check)));
+    inputs[order[0]].focus();
+    inputs.forEach((inp, i) => inp.addEventListener('keydown', e => { if (e.key === 'Enter') { const pos = order.indexOf(i); if (pos < order.length - 1) inputs[order[pos + 1]].focus(); else score(); } }));
+    let done = false;
+    function score() {
+      if (done) return; done = true;
+      let right = 0;
+      items.forEach((it, i) => {
+        const ok = matches(inputs[i].value, it) || norm(inputs[i].value).length > 3 && norm(it).includes(norm(inputs[i].value));
+        if (ok) right++;
+        inputs[i].classList.add(ok ? 'input-ok' : 'input-no'); inputs[i].readOnly = true;
+        $('#ans-' + i).innerHTML = ''; if (!ok) $('#ans-' + i).append(h('span', { class: 'no' }, it));
+      });
+      check.remove();
+      Store.record('palace', right, items.length, { dur: Date.now() - t0, ms: msStudy, note: `${{ errands: 'errands', words: 'words', hard: 'words + abstract' }[kind]} · ${dir === 'back' ? 'backwards' : 'forwards'}` });
+      body.append(h('div', { class: 'panel' }, resultBlock(right, items.length, [
+        h('p', {}, right === items.length ? 'A perfect walk. Now make it permanent: walk it again tonight, tomorrow, and in a week.' : 'Look at the stops you missed. Was the picture too ordinary, too small, or did it blend into its spot, like a white egg against a white wall?'),
+        tip('Make it last', 'More than half of anything new is forgotten within an hour unless you review it. Walk this route in your mind again this evening and tomorrow, and the list will stay with you.')], setup)));
+    }
+  }
+  setup();
+};
+
+/* ============ 4 · names & faces ============ */
+const NAME_HINTS = { Baker: 'a baker: flour all over them', Fisher: 'a fisherman with a rod', Stone: 'turned to stone', Rivers: 'standing in a river', Knight: 'in shining armour', Bell: 'ringing a huge bell', Fox: 'a fox on their shoulder', Woods: 'lost in a forest', Carpenter: 'sawing a plank', Hill: 'rolling down a hill', Cook: 'stirring a pot', Mason: 'laying bricks', Shepherd: 'herding sheep', Moon: 'glowing like the moon', Frost: 'covered in frost', Gold: 'painted gold', Sterling: 'made of silver', Bishop: 'in a mitre', Hunter: 'with a bow and arrow', Rose: 'a rose between the teeth', Lamb: 'holding a lamb', Swan: 'riding a swan', Marsh: 'sinking in a bog', Banks: 'stuffed with banknotes', Steele: 'made of steel', Nguyen: '“win”: holding a trophy', Kowalski: 'a cow on skis', Okafor: 'an oak tree with a 4 carved in it', Delacroix: 'a deli selling crosses', Petrov: 'a rough pet', Haddad: '“had a dad”: a dad on their back', Lindqvist: 'lint in a twist', Moreau: '“more row”: rowing a boat', Tanaka: 'a tan car', Mendoza: 'mending a bulldozer', Achebe: 'a cheap bee', Romano: 'a Roman centurion', Brennan: 'bran cereal with a nan', Castillo: 'a castle on their head', Adeyemi: '“a day, Emmy”: holding an Emmy', Novak: '“no vac”: a broken vacuum', Fitzgerald: 'fits a giraffe called Gerald', Albrecht: '“all brick”: built of bricks', Ishikawa: '“fishy kawa”: fish leaping from a river', Silva: 'silver', MacLeod: 'a laptop screaming loudly', Oyelaran: '“oil a run”: slipping on oil', Varga: '“far car”: a car far away', Kapoor: 'a cap that pours water', Johansson: 'a toilet (john) with a son' };
+function faceParams() {
+  const skins = ['#F6D5BC', '#EDBE9A', '#D9A07A', '#B97A53', '#8D5A3B', '#6B4027', '#F0C8A0'];
+  const hairs = ['#1E1A17', '#4A3022', '#7A4A26', '#B5793E', '#E0BE6A', '#A33A1D', '#9EA0A5', '#E8E6E1'];
+  const bgs = ['#CFE0F5', '#F5D9CF', '#D7EFD9', '#EADCF5', '#F5EBC9', '#D2EEF0', '#F2D4E2'];
+  return {
+    skin: pick(skins), hair: pick(hairs), bg: pick(bgs), shirt: pick(['#2944C7', '#B4232F', '#1D7A4C', '#A86E0C', '#5B3C88', '#26304A', '#D4663A']),
+    style: pick(['bald', 'short', 'long', 'curly', 'bun', 'mohawk', 'side', 'short', 'long']),
+    rx: 30 + rand(7), ry: 37 + rand(6), eye: pick(['#3B2A1E', '#2F5D8C', '#3E7B4E', '#5B4632']), eyeR: 2.6 + Math.random() * 1.4,
+    brow: rand(3), nose: rand(3), mouth: rand(4),
+    glasses: Math.random() < .3 ? pick(['round', 'square']) : null,
+    beard: Math.random() < .3 ? pick(['full', 'moustache', 'goatee']) : null,
+    earring: Math.random() < .22, freckles: Math.random() < .18, hat: Math.random() < .1,
+  };
+}
+function faceFeature(p) {
+  if (p.glasses) return `${p.glasses} glasses`;
+  if (p.beard) return p.beard === 'full' ? 'beard' : p.beard;
+  if (p.hat) return 'woolly hat';
+  if (p.earring) return 'gold earrings';
+  if (p.style === 'mohawk') return 'mohawk';
+  if (p.style === 'bald') return 'bald head';
+  if (p.freckles) return 'freckles';
+  const hc = { '#E8E6E1': 'white hair', '#9EA0A5': 'grey hair', '#A33A1D': 'red hair', '#E0BE6A': 'blond hair' }[p.hair];
+  return hc || (p.style === 'curly' ? 'curly hair' : p.style === 'bun' ? 'hair bun' : 'face shape');
+}
+function faceSVG(p) {
+  const cx = 60, cy = 66, top = cy - p.ry;
+  let s = `<svg width="100%" viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustrated face"><rect width="120" height="140" fill="${p.bg}"/>`;
+  if (p.style === 'long') s += `<path d="M${cx - p.rx - 7},${cy + 40} L${cx - p.rx - 5},${cy - 8} Q${cx},${top - 18} ${cx + p.rx + 5},${cy - 8} L${cx + p.rx + 7},${cy + 40} Z" fill="${p.hair}"/>`;
+  s += `<rect x="${cx - 11}" y="${cy + p.ry - 8}" width="22" height="22" fill="${p.skin}"/><path d="M14,140 Q18,${cy + p.ry + 10} ${cx},${cy + p.ry + 8} Q102,${cy + p.ry + 10} 106,140 Z" fill="${p.shirt}"/>`;
+  s += `<ellipse cx="${cx - p.rx + 1}" cy="${cy + 2}" rx="5" ry="8" fill="${p.skin}"/><ellipse cx="${cx + p.rx - 1}" cy="${cy + 2}" rx="5" ry="8" fill="${p.skin}"/>`;
+  if (p.earring) s += `<circle cx="${cx - p.rx + 1}" cy="${cy + 12}" r="2.6" fill="none" stroke="#D9A520" stroke-width="1.6"/><circle cx="${cx + p.rx - 1}" cy="${cy + 12}" r="2.6" fill="none" stroke="#D9A520" stroke-width="1.6"/>`;
+  s += `<ellipse cx="${cx}" cy="${cy}" rx="${p.rx}" ry="${p.ry}" fill="${p.skin}"/>`;
+  const cap = `M${cx - p.rx},${cy - 4} Q${cx - p.rx},${top - 8} ${cx},${top - 9} Q${cx + p.rx},${top - 8} ${cx + p.rx},${cy - 4} Q${cx + p.rx - 5},${top + 10} ${cx},${top + 8} Q${cx - p.rx + 5},${top + 10} ${cx - p.rx},${cy - 4}Z`;
+  if (['short', 'long', 'bun'].includes(p.style)) s += `<path d="${cap}" fill="${p.hair}"/>`;
+  if (p.style === 'side') s += `<path d="M${cx - p.rx},${cy - 2} Q${cx - p.rx - 2},${top - 10} ${cx + 6},${top - 9} Q${cx + p.rx + 2},${top - 6} ${cx + p.rx},${cy - 4} Q${cx + 4},${top + 4} ${cx - p.rx + 8},${top + 16} Z" fill="${p.hair}"/>`;
+  if (p.style === 'bun') s += `<circle cx="${cx}" cy="${top - 10}" r="10" fill="${p.hair}"/>`;
+  if (p.style === 'curly') for (let a = 0; a <= 12; a++) { const t = Math.PI + a * Math.PI / 12; s += `<circle cx="${(cx + Math.cos(t) * (p.rx + 1)).toFixed(1)}" cy="${(cy - 6 + Math.sin(t) * (p.ry + 1)).toFixed(1)}" r="8" fill="${p.hair}"/>`; }
+  if (p.style === 'mohawk') s += `<path d="M${cx - 6},${top + 6} Q${cx},${top - 26} ${cx + 6},${top + 6} Z" fill="${p.hair}"/>`;
+  if (p.style === 'bald') s += `<path d="M${cx - p.rx + 1},${cy - 2} q-1,-10 5,-14 M${cx + p.rx - 1},${cy - 2} q1,-10 -5,-14" stroke="${p.hair}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  if (p.hat) s += `<path d="M${cx - p.rx - 2},${cy - 10} Q${cx},${top - 30} ${cx + p.rx + 2},${cy - 10} Z" fill="#B4232F"/><rect x="${cx - p.rx - 3}" y="${cy - 14}" width="${2 * p.rx + 6}" height="8" rx="3" fill="#7E1720"/><circle cx="${cx}" cy="${top - 18}" r="5" fill="#F2F2F2"/>`;
+  const ey = cy - 2, ex = 12;
+  const browY = ey - 9, bw = [1.6, 3, 2.2][p.brow], tilt = [0, 2, -2][p.brow];
+  s += `<path d="M${cx - ex - 6},${browY + tilt} L${cx - ex + 5},${browY - tilt}" stroke="${p.hair === '#E8E6E1' ? '#999' : p.hair}" stroke-width="${bw}" stroke-linecap="round"/><path d="M${cx + ex - 5},${browY - tilt} L${cx + ex + 6},${browY + tilt}" stroke="${p.hair === '#E8E6E1' ? '#999' : p.hair}" stroke-width="${bw}" stroke-linecap="round"/>`;
+  s += `<ellipse cx="${cx - ex}" cy="${ey}" rx="5" ry="3.6" fill="#fff"/><ellipse cx="${cx + ex}" cy="${ey}" rx="5" ry="3.6" fill="#fff"/><circle cx="${cx - ex}" cy="${ey}" r="${p.eyeR.toFixed(1)}" fill="${p.eye}"/><circle cx="${cx + ex}" cy="${ey}" r="${p.eyeR.toFixed(1)}" fill="${p.eye}"/>`;
+  const nc = 'rgba(0,0,0,.28)';
+  s += [`<path d="M${cx},${ey + 2} L${cx - 3},${ey + 14} L${cx + 2},${ey + 15}" stroke="${nc}" stroke-width="1.6" fill="none" stroke-linecap="round"/>`,
+    `<ellipse cx="${cx}" cy="${ey + 13}" rx="4" ry="3" fill="${nc}"/>`,
+    `<path d="M${cx - 6},${ey + 14} Q${cx},${ey + 18} ${cx + 6},${ey + 14}" stroke="${nc}" stroke-width="2" fill="none" stroke-linecap="round"/>`][p.nose];
+  if (p.freckles) for (let k = 0; k < 6; k++) s += `<circle cx="${cx + (k < 3 ? -16 : 10) + (k % 3) * 3}" cy="${ey + 9 + (k % 2) * 2}" r=".9" fill="rgba(120,60,20,.55)"/>`;
+  const my = ey + 24;
+  s += [`<path d="M${cx - 9},${my} Q${cx},${my + 7} ${cx + 9},${my}" stroke="#8A3B3B" stroke-width="2.2" fill="none" stroke-linecap="round"/>`,
+    `<path d="M${cx - 7},${my + 1} L${cx + 7},${my + 1}" stroke="#8A3B3B" stroke-width="2.2" stroke-linecap="round"/>`,
+    `<path d="M${cx - 10},${my - 1} Q${cx},${my + 10} ${cx + 10},${my - 1} Z" fill="#7A2E2E"/><path d="M${cx - 8},${my} L${cx + 8},${my}" stroke="#fff" stroke-width="2"/>`,
+    `<ellipse cx="${cx}" cy="${my + 2}" rx="3.5" ry="4" fill="#7A2E2E"/>`][p.mouth];
+  const bc = p.hair === '#E8E6E1' ? '#D8D6D1' : p.hair;
+  if (p.beard === 'full') s += `<path d="M${cx - p.rx + 3},${cy + 4} Q${cx - p.rx + 6},${cy + p.ry + 8} ${cx},${cy + p.ry + 6} Q${cx + p.rx - 6},${cy + p.ry + 8} ${cx + p.rx - 3},${cy + 4} Q${cx + 10},${my + 10} ${cx},${my + 9} Q${cx - 10},${my + 10} ${cx - p.rx + 3},${cy + 4}Z" fill="${bc}"/><path d="M${cx - 10},${my - 3} Q${cx},${my - 8} ${cx + 10},${my - 3} Q${cx},${my - 4} ${cx - 10},${my - 3}Z" fill="${bc}"/>`;
+  if (p.beard === 'moustache') s += `<path d="M${cx - 12},${my - 1} Q${cx - 6},${my - 9} ${cx},${my - 4} Q${cx + 6},${my - 9} ${cx + 12},${my - 1} Q${cx},${my - 3} ${cx - 12},${my - 1}Z" fill="${bc}"/>`;
+  if (p.beard === 'goatee') s += `<path d="M${cx - 6},${my + 6} Q${cx},${my + 18} ${cx + 6},${my + 6} Q${cx},${my + 9} ${cx - 6},${my + 6}Z" fill="${bc}"/>`;
+  if (p.glasses === 'round') s += `<g fill="none" stroke="#222" stroke-width="1.8"><circle cx="${cx - ex}" cy="${ey}" r="8"/><circle cx="${cx + ex}" cy="${ey}" r="8"/><path d="M${cx - 4},${ey} L${cx + 4},${ey}"/></g>`;
+  if (p.glasses === 'square') s += `<g fill="none" stroke="#222" stroke-width="2"><rect x="${cx - ex - 8}" y="${ey - 6}" width="16" height="12" rx="2"/><rect x="${cx + ex - 8}" y="${ey - 6}" width="16" height="12" rx="2"/><path d="M${cx - 4},${ey} L${cx + 4},${ey}"/></g>`;
+  return s + '</svg>';
+}
+function makePeople(n) {
+  const firsts = sample(FIRST, n), lasts = sample(LAST, n);
+  return firsts.map((f, i) => ({ first: f, last: lasts[i], face: faceParams() }));
+}
+VIEWS.faces = app => {
+  app.append(gameHeader('faces', 'Study the faces and names, then put names back on the faces in a new order. One point for each first name and one for each surname.'));
+  const body = h('div', { class: 'stack' }); app.append(body);
+  let count = 10, secs = 0, hints = true;
+  function setup() {
+    body.innerHTML = '';
+    body.append(h('div', { class: 'panel tablet stack' },
+      h('div', { class: 'optrow' },
+        h('div', { class: 'f' }, 'People', seg([[6, '6'], [10, '10'], [16, '16'], [24, '24']], count, v => count = v)),
+        h('div', { class: 'f' }, 'Study time', seg([[0, 'Self-paced'], [60, '1 min'], [120, '2 min'], [300, '5 min']], secs, v => secs = v)),
+        h('div', { class: 'f' }, 'Name hints', seg([[true, 'Show'], [false, 'Hide']], hints, v => hints = v))),
+      tip('The Baker/baker paradox', 'Tell people a man is a baker and they remember. Tell them his name is Baker and they forget. The job comes with pictures (bread, a white hat, a warm smell); the surname comes with none. So turn every name into something you can picture, and pin it to one striking feature of the face. The hints under each face show one way to do it.'),
+      h('div', {}, h('button', { class: 'btn primary', onclick: run }, 'Meet the people'))));
+  }
+  function run() {
+    const people = makePeople(count); const t0 = Date.now();
+    body.innerHTML = '';
+    const clock = h('span', { class: 'clock' });
+    let timer;
+    const ready = h('button', { class: 'btn primary', onclick: () => { const ms = timer.stop(); recall(people, ms, t0); } }, 'I’m ready');
+    body.append(h('div', { class: 'panel tablet stack' }, h('div', { class: 'row' }, h('span', { class: 'small muted' }, 'Study'), h('span', { class: 'spacer' }), clock, ready),
+      h('div', { class: 'face-grid' }, people.map(p => h('div', { class: 'face-card' }, h('div', { html: faceSVG(p.face) }),
+        h('div', { class: 'face-name' }, p.first, ' ', p.last),
+        hints ? h('div', { class: 'small muted', style: 'text-align:center;line-height:1.35' }, `${p.last} → ${NAME_HINTS[p.last] || 'make a sound-alike picture'}. Anchor it on the ${faceFeature(p.face)}.`) : null)))));
+    timer = secs ? countdown(clock, secs, () => { const ms = timer.stop(); recall(people, ms, t0); }) : stopwatch(clock);
+    onLeave(() => timer.stop());
+  }
+  function recall(people, ms, t0) {
+    runCleanups();
+    const order = shuffle(people.map((p, i) => i));
+    body.innerHTML = '';
+    const fields = [];
+    const check = h('button', { class: 'btn primary', onclick: () => score() }, 'Check names');
+    body.append(h('div', { class: 'panel tablet stack' }, h('h2', { style: 'font-size:1.15rem' }, 'Who is who?'),
+      h('div', { class: 'face-grid' }, order.map(i => {
+        const f = h('input', { type: 'text', placeholder: 'First name', autocomplete: 'off', id: 'fn-' + i, 'aria-label': 'First name' });
+        const l = h('input', { type: 'text', placeholder: 'Last name', autocomplete: 'off', id: 'ln-' + i, 'aria-label': 'Last name' });
+        const ans = h('div', { class: 'ans' }); fields[i] = { f, l, ans };
+        return h('div', { class: 'face-card' }, h('div', { html: faceSVG(people[i].face) }), f, l, ans);
+      })), h('div', { class: 'row' }, check)));
+    let done = false;
+    function score() {
+      if (done) return; done = true; let pts = 0;
+      people.forEach((p, i) => {
+        const { f, l, ans } = fields[i];
+        const okF = matches(f.value, p.first), okL = matches(l.value, p.last);
+        pts += okF + okL;
+        f.classList.add(okF ? 'input-ok' : 'input-no'); l.classList.add(okL ? 'input-ok' : 'input-no'); f.readOnly = l.readOnly = true;
+        if (!okF || !okL) ans.append(h('span', { class: 'no' }, `${p.first} ${p.last}`));
+      });
+      check.remove();
+      Store.record('faces', pts, people.length * 2, { dur: Date.now() - t0, ms, note: `${people.length} people${hints ? ' · hints on' : ''}` });
+      body.append(h('div', { class: 'panel' }, resultBlock(pts, people.length * 2, [
+        h('p', {}, 'For each miss, ask: did I make the name into a picture, and did I tie it to a feature of the face? A name only linked to a face has one string. A picture has many.'),
+        tip('At a party', 'Most names are forgotten because you were busy planning what to say next. When you hear a name, stop and build the picture right then. Use it once in conversation.')], setup)));
+    }
+  }
+  setup();
+};
+/* ============ 5 · major system ============ */
+const pegs = () => Object.assign({}, DEFAULT_PEGS, Store.data.pegs || {});
+function pegFor(numStr) { return numStr.match(/.{1,2}/g).map(c => pegs()[c] || '?'); }
+VIEWS.major = app => {
+  app.append(gameHeader('major', 'Invented around 1648. Each digit is a consonant sound; add any vowels to make a word you can picture. Learn the code, drill it, then use it to hold long numbers.'));
+  let tab = 'learn';
+  const tabs = seg([['learn', 'Learn the code'], ['drill', 'Number → picture'], ['decode', 'Word → number'], ['vault', 'Number vault'], ['encode', 'Encode a number']], tab, v => { tab = v; render(); });
+  const body = h('div', { class: 'panel tablet stack' });
+  app.append(h('div', { class: 'stack' }, h('div', { class: 'scroll-x' }, tabs), body));
+  function render() { runCleanupsLocal(); body.innerHTML = ''; ({ learn, drill, decode, vault, encode })[tab](); }
+  let local = []; const runCleanupsLocal = () => { local.forEach(f => f()); local = []; };
+  onLeave(runCleanupsLocal);
+
+  function learn() {
+    const p = pegs();
+    const grid = h('div', { class: 'peg-grid' });
+    for (let i = 0; i < 100; i++) { const k = String(i).padStart(2, '0'); grid.append(h('label', {}, k, h('input', { type: 'text', id: 'peg-' + k, value: p[k], 'data-k': k, 'aria-label': 'Picture for ' + k }))); }
+    const saved = h('span', { class: 'small muted' });
+    body.append(
+      h('h2', { style: 'font-size:1.15rem' }, 'The code'),
+      h('div', { class: 'major-table' }, MAJOR_CODE.map(([d, s, m]) => h('div', {}, h('b', {}, d), h('span', {}, s), h('small', {}, m)))),
+      tip('Rules', 'Only sounds count, not spelling: “knife” is n-f = 28 (the k is silent). Double letters count once: “tattoo” = 11. Vowels and w, h, y are free. So 32 = man, 33 = mom, 86 = fish, 40 = rose, 92 = pen, and 3219 = Manitoba.'),
+      h('h2', { style: 'font-size:1.15rem;margin-top:8px' }, 'Your 100 pegs'),
+      h('p', { class: 'small muted' }, 'Each two-digit number gets one picture. Swap any for a word that is more vivid to you: it just has to use the right consonant sounds. The drills use these.'),
+      grid,
+      h('div', { class: 'row' }, h('button', { class: 'btn small', onclick: () => { const o = {}; $$('[data-k]', grid).forEach(inp => { if (inp.value.trim() && inp.value.trim() !== DEFAULT_PEGS[inp.dataset.k]) o[inp.dataset.k] = inp.value.trim(); }); Store.data.pegs = o; Store.save(); saved.textContent = 'Pegs saved.'; } }, 'Save pegs'),
+        h('button', { class: 'btn small ghost', onclick: () => { Store.data.pegs = null; Store.save(); render(); } }, 'Reset to defaults'), saved));
+  }
+  function drill() {
+    const N = 20; let k = 0, right = 0; const t0 = Date.now(); const misses = [];
+    const p = pegs(); const keys = sample(Object.keys(DEFAULT_PEGS).filter(x => x.length === 2), N);
+    const clock = h('span', { class: 'clock' }); const sw = stopwatch(clock); local.push(() => sw.stop());
+    const q = h('div', { class: 'digit-show' }); const ch = h('div', { class: 'choices' }); const lbl = h('span', { class: 'small muted' });
+    body.append(h('div', { class: 'row' }, lbl, h('span', { class: 'spacer' }), clock), h('p', { class: 'muted', style: 'text-align:center' }, 'Pick the picture that encodes this number'), q, ch);
+    const show = () => {
+      if (k >= N) return done();
+      const key = keys[k]; lbl.textContent = `${k + 1} of ${N}`; q.textContent = key;
+      const wrong = sample(Object.keys(DEFAULT_PEGS).filter(x => x.length === 2 && x !== key && (x[0] === key[0] || x[1] === key[1] || x === key[1] + key[0])), 3);
+      ch.innerHTML = '';
+      shuffle([key, ...wrong]).forEach(o => ch.append(h('button', { type: 'button', onclick: () => { if (o === key) right++; else misses.push(`${key} = ${p[key]}`); k++; show(); } }, p[o])));
+    };
+    const done = () => {
+      const ms = sw.stop();
+      Store.record('major', right, N, { dur: Date.now() - t0, ms, note: 'number → picture' });
+      body.innerHTML = '';
+      body.append(resultBlock(right, N, [h('p', {}, `Time: ${fmtTime(ms)}. Aim for instant recognition. In competition there is no time to decode.`), misses.length ? h('p', { class: 'small muted' }, 'Review: ' + misses.join(' · ')) : null], render));
+    };
+    show();
+  }
+  function decode() {
+    const N = 12; const items = sample(MAJOR_WORDS, N); let k = 0, right = 0; const t0 = Date.now(); const misses = [];
+    const w = h('div', { class: 'item-big' }); const inp = h('input', { type: 'text', inputmode: 'numeric', class: 'big-input', id: 'decode-in', autocomplete: 'off', 'aria-label': 'Number' });
+    const fb = h('p', { class: 'small', style: 'min-height:1.4em;text-align:center' }); const lbl = h('span', { class: 'small muted' });
+    const go = () => {
+      const [word, num] = items[k]; const ok = inp.value.replace(/\D/g, '') === num;
+      if (ok) right++; else misses.push(`${word} = ${num}`);
+      fb.innerHTML = ''; fb.append(h('span', { class: ok ? 'ok' : 'no' }, ok ? 'Correct: ' : 'It was ', num));
+      k++; inp.value = '';
+      if (k >= N) return later(done, 700);
+      later(show, 700);
+    };
+    inp.addEventListener('keydown', e => { if (e.key === 'Enter') go(); });
+    body.append(h('div', { class: 'row' }, lbl), h('p', { class: 'muted', style: 'text-align:center' }, 'Turn the word back into digits, sound by sound'), w, h('div', { style: 'max-width:340px;margin:0 auto;width:100%', class: 'stack' }, inp, h('button', { class: 'btn primary', onclick: go }, 'Check')), fb);
+    const show = () => { lbl.textContent = `${k + 1} of ${N}`; w.textContent = items[k][0]; fb.textContent = ''; inp.focus(); };
+    const done = () => {
+      Store.record('major', right, N, { dur: Date.now() - t0, note: 'word → number' });
+      body.innerHTML = '';
+      body.append(resultBlock(right, N, [misses.length ? h('p', { class: 'small muted' }, 'Review: ' + misses.join(' · ')) : h('p', {}, 'Perfect decoding.')], render));
+    };
+    show();
+  }
+  function vault() {
+    let len = 20, help = true, secs = 0;
+    const opts = h('div', { class: 'stack' },
+      h('div', { class: 'optrow' },
+        h('div', { class: 'f' }, 'Digits', seg([[10, '10'], [20, '20'], [30, '30'], [50, '50'], [80, '80']], len, v => len = v)),
+        h('div', { class: 'f' }, 'Peg hints while studying', seg([[true, 'Show'], [false, 'Hide']], help, v => help = v)),
+        h('div', { class: 'f' }, 'Study time', seg([[0, 'Self-paced'], [60, '1 min'], [300, '5 min']], secs, v => secs = v))),
+      tip('Method', 'Split the number into pairs. Turn each pair into its peg picture and place it at the next stop in your palace, or chain them into a story: a mower (34) runs over a pen (92) and a fish (86) leaps out. Speed-numbers competitors get 5 minutes.'),
+      h('div', {}, h('button', { class: 'btn primary', onclick: () => start() }, 'Open the vault')));
+    body.append(opts);
+    function start() {
+      const num = Array.from({ length: len }, () => rand(10)).join(''); const t0 = Date.now();
+      body.innerHTML = '';
+      const clock = h('span', { class: 'clock' }); const loci = getLoci();
+      const pairs = num.match(/.{1,2}/g);
+      let timer;
+      const finish = () => { const ms = timer.stop(); ask(num, ms, t0); };
+      body.append(h('div', { class: 'row' }, h('span', { class: 'small muted' }, `${len} digits`), h('span', { class: 'spacer' }), clock, h('button', { class: 'btn primary', onclick: finish }, 'I’m ready')),
+        h('div', { class: 'digits-pairs' }, pairs.map((pr, i) => h('span', {}, pr, help ? h('small', {}, pegs()[pr] || '') : null, help && loci[i] ? h('small', {}, '@ ' + loci[i]) : null))));
+      timer = secs ? countdown(clock, secs, finish) : stopwatch(clock);
+      local.push(() => timer.stop());
+    }
+    function ask(num, ms, t0) {
+      body.innerHTML = '';
+      const inp = h('textarea', { id: 'vault-in', rows: 3, class: 'big-input', 'aria-label': 'Digits in order', inputmode: 'numeric' });
+      const go = () => {
+        const g = inp.value.replace(/\D/g, ''); let right = 0;
+        const shown = h('p', { class: 'mono', style: 'font-size:1.15rem;word-break:break-all;line-height:1.8' });
+        for (let i = 0; i < num.length; i++) { const ok = g[i] === num[i]; if (ok) right++; shown.append(h('span', { class: ok ? 'ok' : 'no', style: ok ? '' : 'text-decoration:underline' }, num[i]), (i % 2) ? ' ' : ''); }
+        Store.record('major', right, num.length, { dur: Date.now() - t0, ms, note: `vault ${num.length} digits` });
+        body.innerHTML = '';
+        body.append(resultBlock(right, num.length, [h('p', { class: 'small muted' }, `Studied for ${fmtTime(ms)}. Wrong digits are underlined:`), shown], render));
+      };
+      body.append(h('label', { class: 'f', for: 'vault-in' }, 'Type the number from memory'), inp, h('div', {}, h('button', { class: 'btn primary', onclick: go }, 'Check')));
+      inp.focus();
+    }
+  }
+  function encode() {
+    const inp = h('input', { type: 'text', id: 'encode-in', inputmode: 'numeric', placeholder: 'e.g. a PIN, phone or card number', 'aria-label': 'Number to encode' });
+    const out = h('div', { class: 'stack' });
+    const upd = () => {
+      const d = inp.value.replace(/\D/g, ''); out.innerHTML = '';
+      if (!d) return;
+      const ws = pegFor(d); const prs = d.match(/.{1,2}/g);
+      out.append(h('div', { class: 'digits-pairs' }, prs.map((pr, i) => h('span', {}, pr, h('small', {}, ws[i])))),
+        h('p', {}, 'Story: ', h('b', {}, ws.map((w, i) => i === 0 ? `A ${w}` : i === ws.length - 1 ? ` and finally a ${w}.` : ` smashes into a ${w},`).join(''))),
+        h('p', { class: 'small muted' }, 'Make it ridiculous, then place it somewhere relevant: a bank PIN at your bank’s door, a friend’s number at their house.'));
+    };
+    inp.addEventListener('input', upd);
+    body.append(h('h2', { style: 'font-size:1.15rem' }, 'Encode a real number'), h('p', { class: 'small muted' }, 'Try your PIN, a phone number or a card number. Nothing you type here is saved.'), inp, out);
+  }
+  render();
+};
+
+/* ============ 6 · speed cards ============ */
+const paoTable = () => Object.assign({}, DEFAULT_PAO, Store.data.pao || {});
+const DECK = SUITS.flatMap(([s]) => RANKS.map(r => r + s));
+const suitOf = c => SUITS.find(x => x[0] === c.slice(-1));
+const cardLabel = c => c.slice(0, -1) + suitOf(c)[1];
+function cardEl(c, big) {
+  const [, sym, col] = suitOf(c); const r = c.slice(0, -1);
+  return h('div', { class: `pcard ${col}${big ? ' lg' : ''}`, role: 'img', 'aria-label': `${r} of ${{ S: 'spades', H: 'hearts', D: 'diamonds', C: 'clubs' }[c.slice(-1)]}` },
+    h('span', { class: 't' }, r + sym), h('span', { class: 'c' }, sym), h('span', { class: 'bt' }, r + sym));
+}
+VIEWS.cards = app => {
+  app.append(gameHeader('cards', 'Memorise a shuffled deck as fast as you can, then rebuild its order. With Person–Action–Object, three cards make one scene: person from the first, action from the second, object from the third.'));
+  const body = h('div', { class: 'stack' }); app.append(body);
+  let size = 13, mode = 'self', group = 3, hint = true, rate = 0.5;
+  function setup() {
+    body.innerHTML = '';
+    const rateLbl = h('span', { class: 'mono' });
+    const setRate = r => { rate = Math.round(r * 100) / 100; rateLbl.textContent = `${rate.toFixed(2)} cards/s (${(1 / rate).toFixed(1)} s each)`; };
+    setRate(rate);
+    body.append(
+      h('div', { class: 'panel tablet stack' },
+        h('div', { class: 'optrow' },
+          h('div', { class: 'f' }, 'Cards', seg([[9, '9'], [13, '13'], [26, '26'], [52, 'Full deck']], size, v => size = v)),
+          h('div', { class: 'f' }, 'Show', seg([[1, 'One card'], [3, 'Three at once']], group, v => group = v)),
+          h('div', { class: 'f' }, 'Your PAO images', seg([[true, 'Show as hints'], [false, 'Hide']], hint, v => hint = v))),
+        h('div', { class: 'optrow' },
+          h('div', { class: 'f' }, 'Pace', seg([['self', 'Self-paced'], ['metro', 'Metronome']], mode, v => mode = v)),
+          h('div', { class: 'f' }, 'Metronome speed', h('div', { class: 'row' }, h('button', { class: 'btn small', onclick: () => setRate(Math.max(0.1, rate / 1.15)) }, 'Slower'), rateLbl, h('button', { class: 'btn small', onclick: () => setRate(rate * 1.15) }, '15% faster')))),
+        tip('When you stop improving', 'When the author’s card times stalled, the expert psychologist Anders Ericsson told him to use a metronome: memorise one card per click, find the speed where he made mistakes, then go 10–20% faster than that until the mistakes stopped. Use Metronome mode for this, and note any card that keeps tripping you up.'),
+        h('div', {}, h('button', { class: 'btn primary', onclick: run }, 'Shuffle and start'))),
+      paoEditor());
+  }
+  function paoEditor() {
+    const t = paoTable();
+    const det = h('details', { class: 'panel' }, h('summary', { style: 'cursor:pointer;font-weight:600' }, 'Edit your PAO deck (52 people, actions and objects)'));
+    const saved = h('span', { class: 'small muted' });
+    const tb = h('tbody', {}, DECK.map(c => h('tr', {}, h('td', { class: suitOf(c)[2] === 'red' ? 'no' : '' }, cardLabel(c)),
+      ...[0, 1, 2].map(j => h('td', {}, h('input', { type: 'text', id: `pao-${c}-${j}`, value: t[c][j], 'data-c': c, 'data-j': j, 'aria-label': `${cardLabel(c)} ${['person', 'action', 'object'][j]}` }))))));
+    det.append(h('div', { class: 'stack', style: 'margin-top:12px' },
+      h('p', { class: 'small muted' }, 'The starter deck uses stock characters. Swap in people who are vivid to you: the author used 1980s TV stars, and one world champion used cartoon characters. Give every card a different action and object, and avoid two similar actions (the author kept mixing up two “riding” images).'),
+      h('div', { class: 'scroll-x' }, h('table', { class: 'pao-table' }, h('thead', {}, h('tr', {}, h('th', {}, 'Card'), h('th', {}, 'Person'), h('th', {}, 'Action'), h('th', {}, 'Object'))), tb)),
+      h('div', { class: 'row' }, h('button', { class: 'btn small', onclick: () => { const o = {}; $$('[data-c]', tb).forEach(i => { (o[i.dataset.c] = o[i.dataset.c] || ['', '', ''])[i.dataset.j] = i.value.trim(); }); Store.data.pao = o; Store.save(); saved.textContent = 'PAO deck saved.'; } }, 'Save PAO deck'),
+        h('button', { class: 'btn small ghost', onclick: () => { Store.data.pao = null; Store.save(); setup(); } }, 'Reset to starter deck'), saved)));
+    return det;
+  }
+  function run() {
+    const deck = sample(DECK, size); const t0 = Date.now(); const P = paoTable();
+    body.innerHTML = '';
+    const panel = h('div', { class: 'panel tablet stack' }); body.append(panel);
+    const clock = h('span', { class: 'clock' }); const sw = stopwatch(clock); onLeave(() => sw.stop());
+    const row = h('div', { class: 'card-row' }); const hintEl = h('p', { class: 'pao-hint', style: 'text-align:center' }); const bar = h('i'); const lbl = h('span', { class: 'small muted' });
+    const btn = h('button', { class: 'btn primary', onclick: () => next() }, 'Next →');
+    panel.append(h('div', { class: 'row' }, lbl, h('span', { class: 'spacer' }), clock), h('div', { class: 'progress' }, bar), h('div', { class: 'stage', style: 'min-height:300px' }, row, hintEl, btn),
+      h('p', { class: 'small muted', style: 'text-align:center' }, mode === 'metro' ? `Metronome: ${rate.toFixed(2)} cards per second` : 'Space or → for the next cards'));
+    let i = 0; let tick = null;
+    const show = () => {
+      const cs = deck.slice(i, i + group);
+      row.innerHTML = ''; cs.forEach(c => row.append(cardEl(c, group === 1)));
+      lbl.textContent = `Cards ${i + 1}–${i + cs.length} of ${deck.length}`; bar.style.width = ((i + cs.length) / deck.length * 100) + '%';
+      hintEl.textContent = hint ? (cs.length === 3 ? `${P[cs[0]][0]} ${P[cs[1]][1]} a ${P[cs[2]][2]}` : cs.map(c => `${P[c][0]} ${P[c][1]} a ${P[c][2]}`).join(' · ')) : '';
+      btn.textContent = i + group >= deck.length ? 'Done memorising' : 'Next →';
+      if (mode === 'metro') { clearTimeout(tick); tick = later(next, cs.length / rate * 1000); }
+    };
+    const next = () => { if (i + group < deck.length) { i += group; show(); } else { clearTimeout(tick); recall(deck, sw.stop(), t0); } };
+    onKey(e => { if (e.target.tagName === 'BUTTON' || e.target.tagName === 'INPUT') return; if (e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); next(); } });
+    show();
+  }
+  function recall(deck, ms, t0) {
+    runCleanups();
+    body.innerHTML = '';
+    const seq = []; const seqEl = h('div', { class: 'seq', 'aria-live': 'polite' });
+    const sorted = DECK.filter(c => deck.includes(c));
+    const btns = {};
+    const grid = h('div', { class: 'pick-grid' }, sorted.map(c => btns[c] = h('button', { type: 'button', class: suitOf(c)[2], onclick: () => { seq.push(c); btns[c].disabled = true; draw(); } }, cardLabel(c))));
+    const submit = h('button', { class: 'btn primary', onclick: () => score() }, 'Check order');
+    const draw = () => { seqEl.innerHTML = ''; seq.forEach(c => seqEl.append(h('span', { class: suitOf(c)[2] }, cardLabel(c)))); if (!seq.length) seqEl.append(h('span', { class: 'muted', style: 'background:none' }, 'Tap the cards in the order you memorised them')); submit.disabled = seq.length !== deck.length; };
+    body.append(h('div', { class: 'panel tablet stack' },
+      h('div', { class: 'row' }, h('h2', { style: 'font-size:1.15rem' }, 'Rebuild the deck'), h('span', { class: 'spacer' }), h('span', { class: 'pill' }, 'Memorised in ' + fmtTime(ms))),
+      h('p', { class: 'small muted' }, 'Walk through your palace. At each stop, unpack the scene back into its cards.'),
+      seqEl, grid,
+      h('div', { class: 'row' }, h('button', { class: 'btn small', onclick: () => { const c = seq.pop(); if (c) btns[c].disabled = false; draw(); } }, 'Undo'), h('span', { class: 'spacer' }), submit)));
+    draw();
+    function score() {
+      let right = 0, firstErr = -1;
+      seqEl.innerHTML = '';
+      seq.forEach((c, i) => { const ok = c === deck[i]; if (ok) right++; else if (firstErr < 0) firstErr = i; seqEl.append(h('span', { class: `${suitOf(c)[2]} ${ok ? 'good' : 'bad'}` }, cardLabel(c))); });
+      grid.remove(); submit.disabled = true;
+      Store.record('cards', right, deck.length, { dur: Date.now() - t0, ms, note: `${deck.length} cards · ${mode === 'metro' ? rate.toFixed(2) + '/s metronome' : 'self-paced'}` });
+      const truth = h('div', { class: 'seq' }, deck.map(c => h('span', { class: suitOf(c)[2] }, cardLabel(c))));
+      body.append(h('div', { class: 'panel' }, resultBlock(right, deck.length, [
+        h('p', {}, right === deck.length ? `Perfect deck in ${fmtTime(ms)}. The author’s winning U.S. record in 2006 was 1:40 for 52 cards; the world’s best take about 30 seconds.` : `First slip at card ${firstErr + 1}. Which scene failed? Too faint, too similar to another, or a gap in the palace?`),
+        right < deck.length ? h('div', { class: 'stack', style: 'gap:6px' }, h('span', { class: 'small muted' }, 'Correct order:'), truth) : null,
+        tip('If the scenes fade', 'Spend quiet time getting to know each character: how they look, sound, smell and move. Then a single glimpse, like a smile or a flash of colour, is enough to bring the whole scene back.')], setup)));
+    }
+  }
+  setup();
+};
+
+/* ============ 7 · tea party ============ */
+const ROOMS = [['Front door', 'Name'], ['Bathroom', 'Birthday'], ['Kitchen', 'Hometown and ZIP'], ['Den', 'Phone number'], ['Garden', 'Pet'], ['Bedroom', 'Hobbies'], ['Garage', 'Car'], ['Dining room', 'Favourite food']];
+function makeGuest(first, last, used) {
+  const city = pick(CITIES.filter(c => !used.city.has(c[0]))); used.city.add(city[0]);
+  const pet = pick(PETS.filter(p => !used.pet.has(p[1]))); used.pet.add(pet[1]);
+  const y = 1945 + rand(60), m = rand(12), d = 1 + rand(28);
+  const phone = `${2 + rand(8)}${rand(10)}${rand(10)}-${2 + rand(8)}${rand(10)}${rand(10)}-${String(rand(10000)).padStart(4, '0')}`;
+  return { first, last, face: faceParams(), city: city[0], zip: city[1], y, m, d, phone, pet, hobbies: sample(HOBBIES, 3), car: pick(CARS), food: pick(FOODS) };
+}
+VIEWS.tea = app => {
+  app.append(gameHeader('tea', 'Based on an event at the 2006 U.S. Memory Championship: strangers come on stage and tell you about themselves, then quiz you. It is the most true-to-life test of memory in the competition.'));
+  const body = h('div', { class: 'stack' }); app.append(body);
+  let n = 3, strikesMode = true;
+  function setup() {
+    body.innerHTML = '';
+    body.append(h('div', { class: 'panel tablet stack' },
+      h('div', { class: 'optrow' },
+        h('div', { class: 'f' }, 'Guests', seg([[1, '1'], [3, '3'], [5, '5 (championship)']], n, v => n = v)),
+        h('div', { class: 'f' }, 'Rules', seg([[true, 'Three strikes'], [false, 'Answer everything']], strikesMode, v => strikesMode = v))),
+      tip('The system from the book', 'Imagine one house per guest, all with the same layout. The same room always holds the same kind of fact, as listed below. Numbers become pictures with the Major System (Room 5).'),
+      h('div', { class: 'rooms-key' }, ROOMS.map(([r, f]) => h('div', {}, h('b', {}, r), f))),
+      h('div', {}, h('button', { class: 'btn primary', onclick: run }, 'Let the guests in'))));
+  }
+  function run() {
+    const used = { city: new Set(), pet: new Set() };
+    const fs = sample(FIRST, n), ls = sample(LAST, n);
+    const guests = fs.map((f, i) => makeGuest(f, ls[i], used));
+    const t0 = Date.now();
+    body.innerHTML = '';
+    const clock = h('span', { class: 'clock' }); const sw = stopwatch(clock); onLeave(() => sw.stop());
+    body.append(h('div', { class: 'panel tablet stack' }, h('div', { class: 'row' }, h('span', { class: 'small muted' }, 'Meet the guests'), h('span', { class: 'spacer' }), clock, h('button', { class: 'btn primary', onclick: () => quiz(guests, sw.stop(), t0) }, 'Start the questions')),
+      h('div', { class: 'stack', style: 'gap:22px' }, guests.map((g, i) => h('div', { class: 'row', style: 'align-items:flex-start;gap:18px' },
+        h('div', { style: 'width:130px;flex:none', html: faceSVG(g.face) }),
+        h('dl', { class: 'guest', style: 'flex:1;min-width:220px;margin:0' },
+          h('dt', {}, 'Name'), h('dd', {}, `${g.first} ${g.last}`),
+          h('dt', {}, 'Born'), h('dd', {}, `${MONTHS[g.m]} ${g.d}, ${g.y}`),
+          h('dt', {}, 'From'), h('dd', {}, `${g.city} ${g.zip}`),
+          h('dt', {}, 'Phone'), h('dd', { class: 'mono' }, g.phone),
+          h('dt', {}, 'Pet'), h('dd', {}, `A ${g.pet[0]} called ${g.pet[1]}`),
+          h('dt', {}, 'Hobbies'), h('dd', {}, g.hobbies.join(', ')),
+          h('dt', {}, 'Drives'), h('dd', {}, `a ${g.car}`),
+          h('dt', {}, 'Loves'), h('dd', {}, g.food)))))));
+  }
+  function quiz(guests, ms, t0) {
+    runCleanups();
+    const qs = [];
+    const kinds = ['born', 'city', 'zip', 'phone', 'petname', 'pettype', 'hobby', 'car', 'food'];
+    guests.forEach((g, gi) => qs.push({ gi, k: 'name' }));
+    const rest = []; guests.forEach((g, gi) => kinds.forEach(k => rest.push({ gi, k })));
+    qs.push(...shuffle(rest));
+    let qi = 0, right = 0, strikes = 0; const log = [];
+    body.innerHTML = '';
+    const panel = h('div', { class: 'panel tablet stack' }); body.append(panel);
+    const ask = () => {
+      if (qi >= qs.length || (strikesMode && strikes >= 3)) return done();
+      const { gi, k } = qs[qi]; const g = guests[gi];
+      panel.innerHTML = '';
+      const named = k !== 'name';
+      const prompts = { name: 'What is this guest’s full name?', born: 'When were they born?', city: 'Which town are they from?', zip: 'What is their ZIP code?', phone: 'What is their phone number?', petname: `What is their ${g.pet[0]}’s name?`, pettype: 'What kind of pet do they have?', hobby: 'Name one of their hobbies.', car: 'What car do they drive?', food: 'What food do they love?' };
+      let inputs;
+      if (k === 'born') {
+        const ms_ = h('select', { id: 'q-month', 'aria-label': 'Month' }, h('option', { value: '' }, 'Month'), MONTHS.map((m, i) => h('option', { value: i }, m)));
+        const dd = h('input', { type: 'number', id: 'q-day', placeholder: 'Day', min: 1, max: 31, 'aria-label': 'Day' });
+        const yy = h('input', { type: 'number', id: 'q-year', placeholder: 'Year', 'aria-label': 'Year' });
+        inputs = h('div', { class: 'row', style: 'flex-wrap:nowrap' }, ms_, dd, yy);
+        inputs.val = () => [ms_.value, dd.value, yy.value];
+      } else {
+        const inp = h('input', { type: 'text', id: 'q-answer', autocomplete: 'off', 'aria-label': 'Answer', inputmode: ['zip', 'phone'].includes(k) ? 'numeric' : 'text' });
+        inputs = inp; inputs.val = () => inp.value;
+      }
+      const check = () => {
+        const v = inputs.val(); let ok = false, truth = '';
+        switch (k) {
+          case 'name': ok = matches(String(v).split(' ')[0], g.first) && matches(String(v).split(' ').slice(1).join(' '), g.last); truth = `${g.first} ${g.last}`; break;
+          case 'born': ok = +v[0] === g.m && v[0] !== '' && +v[1] === g.d && +v[2] === g.y; truth = `${MONTHS[g.m]} ${g.d}, ${g.y}`; break;
+          case 'city': ok = matches(v, g.city.split(',')[0]) || matches(v, g.city); truth = g.city; break;
+          case 'zip': ok = String(v).replace(/\D/g, '') === g.zip; truth = g.zip; break;
+          case 'phone': ok = String(v).replace(/\D/g, '') === g.phone.replace(/\D/g, ''); truth = g.phone; break;
+          case 'petname': ok = matches(v, g.pet[1]); truth = g.pet[1]; break;
+          case 'pettype': ok = matches(v, g.pet[0]); truth = g.pet[0]; break;
+          case 'hobby': ok = g.hobbies.some(hb => matches(v, hb) || (norm(v).length > 3 && norm(hb).includes(norm(v)))); truth = g.hobbies.join(', '); break;
+          case 'car': { const words = norm(g.car).split(' ').filter(w => w.length > 2 && !/^\d+$/.test(w) && !['red', 'blue', 'black', 'white', 'green', 'yellow', 'silver', 'orange', 'purple', 'maroon'].includes(w)); ok = words.some(w => norm(v).split(' ').some(x => matches(x, w))); truth = g.car; break; }
+          case 'food': { const words = norm(g.food).split(' ').filter(w => w.length > 3); ok = words.some(w => norm(v).split(' ').some(x => matches(x, w))); truth = g.food; break; }
+        }
+        if (ok) right++; else strikes++;
+        log.push({ ok, q: prompts[k], who: `${g.first} ${g.last}`, truth, given: Array.isArray(v) ? (v[0] !== '' ? MONTHS[v[0]] : '') + ' ' + v[1] + ' ' + v[2] : v });
+        qi++;
+        fb.innerHTML = ''; fb.append(h('span', { class: ok ? 'ok' : 'no', style: 'font-weight:600' }, ok ? 'Correct' : 'Strike'), ok ? '' : ` · ${truth}`);
+        checkBtn.disabled = true;
+        later(ask, ok ? 700 : 1600);
+      };
+      const fb = h('p', { style: 'min-height:1.5em' });
+      const checkBtn = h('button', { class: 'btn primary', onclick: check }, 'Answer');
+      panel.append(
+        h('div', { class: 'row' }, h('span', { class: 'small muted' }, `Question ${qi + 1} of ${qs.length}`), h('span', { class: 'spacer' }), strikesMode ? h('span', { class: 'strikes', 'aria-label': `${strikes} strikes` }, '✕'.repeat(strikes) + '·'.repeat(3 - strikes)) : null),
+        h('div', { class: 'row', style: 'align-items:center;gap:18px' }, h('div', { style: 'width:110px;flex:none', html: faceSVG(g.face) }),
+          h('div', { class: 'stack', style: 'flex:1;min-width:220px;gap:10px' }, named ? h('span', { class: 'small muted' }, `${g.first} ${g.last}`) : null, h('h2', { style: 'font-size:1.25rem' }, prompts[k]), inputs, h('div', { class: 'row' }, checkBtn, h('button', { class: 'btn ghost small', onclick: () => { if (inputs.tagName === 'INPUT') inputs.value = ''; check(); } }, 'Pass')), fb)));
+      (inputs.tagName === 'INPUT' ? inputs : inputs.firstChild).focus();
+      panel.onkeydown = e => { if (e.key === 'Enter' && !checkBtn.disabled && e.target.tagName !== 'BUTTON') { e.preventDefault(); check(); } };
+    };
+    const done = () => {
+      Store.record('tea', right, qs.length, { dur: Date.now() - t0, ms, note: `${guests.length} guest${guests.length > 1 ? 's' : ''} · ${strikesMode ? 'three strikes' : 'full quiz'}` });
+      panel.innerHTML = '';
+      const out = strikesMode && strikes >= 3;
+      panel.append(resultBlock(right, qs.length, [
+        h('p', {}, out ? `Three strikes after ${qi} questions.` : 'You answered every question.'),
+        h('div', { class: 'scroll-x' }, h('table', { class: 'hist' }, h('thead', {}, h('tr', {}, h('th', {}, ''), h('th', {}, 'Guest'), h('th', {}, 'Question'), h('th', {}, 'Answer'))),
+          h('tbody', {}, log.map(l => h('tr', {}, h('td', { class: l.ok ? 'ok' : 'no' }, l.ok ? '✓' : '✕'), h('td', {}, l.who), h('td', {}, l.q), h('td', {}, l.ok ? l.truth : h('span', { class: 'no' }, l.truth))))))),
+        tip('Competition strategy', 'At the championship, the author decided to skip the phone numbers entirely and get everything else right. When there is too much to remember, choose on purpose what to drop.')], setup));
+    };
+    ask();
+  }
+  setup();
+};
+
+/* ============ 8 · poem by heart ============ */
+function wordsOf(s) { return norm(s).split(' ').filter(Boolean); }
+function lcs(a, b) { const m = a.length, n = b.length; const d = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0)); for (let i = 1; i <= m; i++) for (let j = 1; j <= n; j++) d[i][j] = a[i - 1] === b[j - 1] ? d[i - 1][j - 1] + 1 : Math.max(d[i - 1][j], d[i][j - 1]); return d[m][n]; }
+const firstLetters = line => line.replace(/([A-Za-z])[A-Za-z'’]*/g, '$1');
+VIEWS.poem = app => {
+  app.append(gameHeader('poem', 'Competitors dread this event most: every word, capital letter and comma must be right. Here you get partial credit for each correct word.'));
+  const body = h('div', { class: 'stack' }); app.append(body);
+  let poemId = POEMS[0].id, custom = '';
+  const notes = {};
+  const current = () => poemId === 'custom' ? { id: 'custom', title: 'Your text', by: '', text: custom } : POEMS.find(p => p.id === poemId);
+  function setup() {
+    body.innerHTML = '';
+    const ta = h('textarea', { id: 'poem-custom', rows: 6, placeholder: 'Paste a poem, speech or passage. One line per line.', hidden: poemId !== 'custom' }, custom);
+    ta.addEventListener('input', () => custom = ta.value);
+    body.append(h('div', { class: 'panel tablet stack' },
+      h('div', { class: 'f' }, 'Choose a text', seg([...POEMS.map(p => [p.id, p.title.replace(/[“”"]/g, '')]), ['custom', 'Your own']], poemId, v => { poemId = v; ta.hidden = v !== 'custom'; })),
+      ta,
+      tip('Two ways in', 'The picture way, from an ancient Roman memory textbook: say a line two or three times, then turn it into pictures and place them at a stop. The feeling way, used by a 15-year-old who won the poem event at the 2006 World Championship: split the poem into short chunks and feel what the writer feels in each, the way actors learn lines.'),
+      h('div', { class: 'row' }, h('button', { class: 'btn primary', onclick: () => { if (!current().text.trim()) return; encode(); } }, 'Encode it'), h('button', { class: 'btn', onclick: () => { if (!current().text.trim()) return; test(); } }, 'Skip to the test'))));
+  }
+  const lines = () => current().text.split('\n').map(s => s.trimEnd()).filter(s => s.trim());
+  function encode() {
+    body.innerHTML = ''; const ls = lines(); const loci = getLoci(); const P = current();
+    notes[P.id] = notes[P.id] || [];
+    let cues = false;
+    const list = h('div', {});
+    const draw = () => {
+      list.innerHTML = '';
+      ls.forEach((l, i) => {
+        const inp = h('input', { type: 'text', id: `note-${i}`, placeholder: `Image or feeling${loci[i] ? ' at ' + loci[i] : ''}`, value: notes[P.id][i] || '', 'aria-label': `Image for line ${i + 1}` });
+        inp.addEventListener('input', () => notes[P.id][i] = inp.value);
+        list.append(h('div', { class: 'poem-line' }, h('span', { class: 'n' }, i + 1), h('div', { class: 'stack', style: 'gap:6px' }, h('div', { class: 'txt' }, cues ? firstLetters(l) : l), inp)));
+      });
+    };
+    draw();
+    body.append(h('div', { class: 'panel tablet stack' },
+      h('div', { class: 'row' }, h('div', {}, h('h2', { style: 'font-size:1.2rem' }, P.title), P.by ? h('p', { class: 'small muted' }, P.by) : null), h('span', { class: 'spacer' }),
+        seg([[false, 'Full text'], [true, 'First letters only']], cues, v => { cues = v; draw(); })),
+      h('p', { class: 'small muted' }, 'For each line, jot the picture or feeling you are placing at that stop. Words that are hard to picture? Use sound-alikes. One German champion keeps a fixed picture for small words, like a circle for “and”, and imagines hammering a nail at each full stop. Then switch to first letters and recite until you can.'),
+      list,
+      h('div', { class: 'row' }, h('button', { class: 'btn primary', onclick: test }, 'I’m ready for the test'), h('button', { class: 'btn ghost', onclick: setup }, 'Choose another text'))));
+  }
+  function test() {
+    body.innerHTML = ''; const ls = lines(); const P = current(); const t0 = Date.now();
+    const ins = ls.map((l, i) => h('input', { type: 'text', id: `line-${i}`, autocomplete: 'off', spellcheck: 'false', 'aria-label': `Line ${i + 1}` }));
+    const res = ls.map(() => h('div', { class: 'small diff' }));
+    ins.forEach((inp, i) => inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); (ins[i + 1] || checkBtn).focus(); } }));
+    const checkBtn = h('button', { class: 'btn primary', onclick: () => score() }, 'Check my poem');
+    body.append(h('div', { class: 'panel tablet stack' }, h('h2', { style: 'font-size:1.2rem' }, `${P.title}: from memory`),
+      h('p', { class: 'small muted' }, `${ls.length} lines. Walk your stops. Capitals and punctuation count for a perfect line, as in competition.`),
+      h('div', {}, ls.map((l, i) => h('div', { class: 'poem-line' }, h('span', { class: 'n' }, i + 1), h('div', { class: 'stack', style: 'gap:4px' }, ins[i], res[i])))),
+      h('div', { class: 'row' }, checkBtn)));
+    ins[0].focus();
+    let done = false;
+    function score() {
+      if (done) return; done = true;
+      let words = 0, total = 0, perfect = 0;
+      ls.forEach((l, i) => {
+        const a = wordsOf(l), g = wordsOf(ins[i].value); const c = lcs(a, g);
+        words += c; total += a.length;
+        const exact = ins[i].value.trim().replace(/\s+/g, ' ') === l.trim().replace(/\s+/g, ' ');
+        if (exact) perfect++;
+        { const cls = exact ? 'input-ok' : (c === a.length && g.length === a.length ? '' : 'input-no'); if (cls) ins[i].classList.add(cls); } ins[i].readOnly = true;
+        if (!exact) res[i].append(h('span', { class: 'muted' }, c === a.length && g.length === a.length ? 'Words right, check punctuation: ' : 'Original: '), h('span', {}, l));
+      });
+      checkBtn.remove();
+      Store.record('poem', words, total, { dur: Date.now() - t0, note: `${P.title.replace(/[“”"]/g, '')} · ${perfect}/${ls.length} perfect lines` });
+      body.append(h('div', { class: 'panel' }, resultBlock(words, total, [h('p', {}, `${perfect} of ${ls.length} lines perfect, punctuation included.`),
+        tip('Make it last', 'Recite it again tomorrow before looking at the text, and again in a week. The author’s coach learned most of Milton’s Paradise Lost this way, at about 200 lines an hour.')], setup, 'of ' + total + ' words')));
+    }
+  }
+  setup();
+};
+
+/* ============ 9 · image forge ============ */
+VIEWS.forge = app => {
+  app.append(gameHeader('forge', 'Memory champions say their sport is really a test of creativity: how fast you can invent a picture that sticks.'));
+  const body = h('div', { class: 'panel tablet stack' }); app.append(body);
+  let deck = shuffle(FORGE), k = 0, made = 0, checksTotal = 0; const t0 = Date.now();
+  function card() {
+    body.innerHTML = '';
+    if (k >= deck.length) { deck = shuffle(FORGE); k = 0; }
+    const [prompt, example] = deck[k];
+    const ta = h('textarea', { id: 'forge-in', rows: 3, placeholder: 'Describe the scene you see. Where is it? What is happening? What does it smell like?', 'aria-label': 'Your image' });
+    const boxes = FORGE_CHECKS.map(([id, label]) => { const c = h('input', { type: 'checkbox', id: 'chk-' + id }); return [c, h('label', { for: 'chk-' + id }, c, h('span', {}, label))]; });
+    const reveal = h('div', { class: 'stack', hidden: true });
+    const rate = h('button', { class: 'btn primary', onclick: () => {
+      if (!ta.value.trim()) { ta.focus(); return; }
+      const n = boxes.filter(([c]) => c.checked).length; made++; checksTotal += n;
+      rate.disabled = true; boxes.forEach(([c]) => c.disabled = true); ta.readOnly = true;
+      reveal.hidden = false;
+      reveal.append(h('p', {}, h('b', {}, `${n} of 6 qualities. `), n >= 5 ? 'That one will stick.' : n >= 3 ? 'Decent. Which missing quality could you add in two seconds?' : 'Too tame. Make it bigger, ruder, louder, smellier.'),
+        tip('One way to see it', example),
+        h('p', { class: 'small muted' }, 'Like Benjamin Franklin rebuilding an essay and comparing it to the original: compare, notice what the example does that yours does not, and steal it.'),
+        h('div', { class: 'row' }, h('button', { class: 'btn primary', onclick: () => { k++; card(); } }, 'Next prompt'), h('button', { class: 'btn', onclick: finish }, `Finish session (${made} made)`)));
+    } }, 'Rate my image');
+    body.append(
+      h('div', { class: 'row' }, h('span', { class: 'small muted' }, `Image ${made + 1}`), h('span', { class: 'spacer' }), made ? h('button', { class: 'btn small ghost', onclick: finish }, 'Finish session') : null),
+      h('div', { class: 'stage', style: 'min-height:120px;padding:10px' }, h('span', { class: 'locus' }, 'Make this memorable'), h('div', { class: 'item-big' }, prompt)),
+      ta, h('div', { class: 'checks' }, boxes.map(b => b[1])), h('div', {}, rate), reveal);
+    ta.focus();
+  }
+  function finish() {
+    if (!made) return;
+    Store.record('forge', made, 0, { dur: Date.now() - t0, note: `average ${(checksTotal / made).toFixed(1)} of 6 qualities` });
+    body.innerHTML = '';
+    body.append(resultBlock(made, 0, [h('p', {}, `Average ${(checksTotal / made).toFixed(1)} of 6 qualities per image.`),
+      tip('The oldest advice', 'A Roman memory textbook from about 85 BC says it best: we forget ordinary things, because nothing new stirs the mind, but remember things that are shocking, unusual, great, unbelievable or funny for a long time.')],
+      () => { made = 0; checksTotal = 0; card(); }, 'images forged'));
+  }
+  card();
+};
+
+/* ============ boot ============ */
+function start() {
+  Store.loadLocal(); setSync();
+  window.addEventListener('hashchange', route);
+  route();
+  Store.connect();
+}
+if (window.claude && window.claude.hot && window.claude.hot.ready) window.claude.hot.ready(start); else start();
+</script>
+
+</body>
+</html>
